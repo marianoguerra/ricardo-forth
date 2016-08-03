@@ -10,7 +10,7 @@ int  m[20000] = { 32 },
      *S = T,
      t = 64,
      w,
-     f;
+     top_of_stack;
 
 // m[0]: dictionary pointer
 // m[1]: return stack index
@@ -37,53 +37,53 @@ void r(int x)
 			I = m[m[1]--];
 			break;
 		case 15:
-			f = S[-f];
+			top_of_stack = S[-top_of_stack];
 			break;
 		case 1:
 			m[m[0]++] = x;
 			break;
 		case 9:
-			f *= *S--;
+			top_of_stack *= *S--;
 			break;
 		case 7:
-			m[f] = *S--;
-			f = *S--;
+			m[top_of_stack] = *S--;
+			top_of_stack = *S--;
 			break;
 		case 0:
-			*++S = f;
-			f = m[I++];
+			*++S = top_of_stack;
+			top_of_stack = m[I++];
 			break;
 		case 8:
-			f = *S-- - f;
+			top_of_stack = *S-- - top_of_stack;
 			break;
 		case 2:
 			m[++m[1]] = I;
 			I = x;
 			break;
 		case 11:
-			f = 0 > f;
+			top_of_stack = 0 > top_of_stack;
 			break;
 		case 4:
 			*m -= 2;
 			m[m[0]++] = 2;
 			break;
 		case 6:
-			f = m[f];
+			top_of_stack = m[top_of_stack];
 			break;
 		case 10:
-			f = *S-- / f;
+			top_of_stack = *S-- / top_of_stack;
 			break;
 		case 3:
 			a(1);
 			m[m[0]++] = 2;
 			break;
 		case 13:
-			putchar(f);
-			f = *S--;
+			putchar(top_of_stack);
+			top_of_stack = *S--;
 			break;
 		case 14:
-			*++S = f;
-			f = getchar();
+			*++S = top_of_stack;
+			top_of_stack = getchar();
 	}
 }
 
