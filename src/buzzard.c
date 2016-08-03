@@ -27,10 +27,20 @@ void def_word(int codeword)
 
 void r(int x)
 {
+    int read_count;
 	switch (m[x++]) {
 		case 5:
-			for (w = scanf("%s", str_mem) < 1 ? exit(0), 0 : last_dict_entry;
-					strcmp(str_mem, &str_mem[m[w + 1]]); w = m[w]);
+            read_count = scanf("%s", str_mem);
+
+            if (read_count < 1) {
+                exit(0);
+            } else {
+                w = last_dict_entry;
+            }
+
+            while (strcmp(str_mem, &str_mem[m[w + 1]])) {
+                w = m[w];
+            }
 
             if (w - 1) {
                 r(w + 2);
