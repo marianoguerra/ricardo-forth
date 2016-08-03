@@ -1,0 +1,4 @@
+: immediate _read @ ! - * / <0 exit echo key _pick
+
+exit
+
