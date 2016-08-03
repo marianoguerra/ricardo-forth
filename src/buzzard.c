@@ -31,6 +31,7 @@ void r(int x)
 		case 5:
 			for (w = scanf("%s", str_mem) < 1 ? exit(0), 0 : last_dict_entry;
 					strcmp(str_mem, &str_mem[m[w + 1]]); w = m[w]);
+
 			w - 1 ? r(w + 2) : (m[m[0]++] = 2, m[m[0]++] = atoi(str_mem));
 			break;
 		case 12:
@@ -98,8 +99,16 @@ void main()
     program_counter = *m;
     m[m[0]++] = w;
     m[m[0]++] = program_counter - 1;
-    for (w = 6; w < 16;)
-	def_word(1), m[m[0]++] = w++;
+
+    for (w = 6; w < 16;) {
+        def_word(1);
+        m[m[0]++] = w++;
+    }
+
     m[1] = *m;
-    for (*m += 512;; r(m[program_counter++]));
+    *m += 512;
+
+    while(1) {
+        r(m[program_counter++]);
+    }
 }
