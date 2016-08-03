@@ -15,12 +15,12 @@ int  m[20000] = { 32 },
 // m[0]: dictionary pointer
 // m[1]: return stack index
 
-void a(int x)
+void a(int codeword)
 {
     m[m[0]++] = last_dict_entry;
     last_dict_entry = *m - 1;
     m[m[0]++] = last_str_entry;
-    m[m[0]++] = x;
+    m[m[0]++] = codeword;
     scanf("%s", str_mem + last_str_entry);
     last_str_entry += strlen(str_mem + last_str_entry) + 1;
 }
