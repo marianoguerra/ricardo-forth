@@ -12,6 +12,9 @@ int  m[20000] = { 32 },
      w,
      f;
 
+// m[0]: dictionary pointer
+// m[1]: return stack index
+
 void a(int x)
 {
     m[m[0]++] = L;
