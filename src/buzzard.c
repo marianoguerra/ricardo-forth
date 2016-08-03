@@ -27,7 +27,6 @@ int  m[20000] = { 32 },
      stack[500],
      *stack_ptr = stack,
      last_str_entry = 64,
-     w,
      top_of_stack;
 
 // m[0]: dictionary pointer
@@ -49,7 +48,7 @@ void def_word(int codeword)
 
 void r(int x)
 {
-    int read_count;
+    int read_count, val, entry_addr, entry_data_addr;
 	switch (m[x++]) {
 		case CW__READ: // _read
             read_count = scanf("%s", str_mem);
@@ -57,19 +56,20 @@ void r(int x)
             if (read_count < 1) {
                 exit(0);
             } else {
-                w = last_dict_entry;
+                entry_addr = last_dict_entry;
             }
 
-            while (strcmp(str_mem, &str_mem[m[w + 1]])) {
-                w = m[w];
+            while (strcmp(str_mem, &str_mem[m[entry_addr + 1]])) {
+                entry_addr = m[entry_addr];
             }
 
-            if (w - 1) {
-                printf("w - 1: %d, r(%d)\n", w - 1, w + 2);
-                r(w + 2);
+            if (entry_addr != 1) {
+                entry_data_addr = entry_addr + 2;
+                r(entry_data_addr);
             } else {
                 append_to_dict(CW_RUN);
-                append_to_dict(atoi(str_mem));
+                val = atoi(str_mem);
+                append_to_dict(val);
             }
 
 			break;
@@ -131,24 +131,25 @@ void r(int x)
 
 void main()
 {
+    int i, tmp1;
     // :
     def_word(CW_DEFINE);
     // immediate
     def_word(CW_IMMED);
     // _read
     def_word(CW_COMPILE);
-    w = m[0];
+    tmp1 = m[0];
     append_to_dict(CW__READ);
     append_to_dict(CW_RUN);
     program_counter = m[0];
     // appends 41
-    append_to_dict(w);
+    append_to_dict(tmp1);
     // appends 42
     append_to_dict(program_counter - 1);
 
-    for (w = 6; w < 16;) {
+    for (i = 6; i < 16; i += 1) {
         def_word(CW_COMPILE);
-        append_to_dict(w++);
+        append_to_dict(i);
     }
 
     m[1] = m[0];
