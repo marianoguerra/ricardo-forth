@@ -6,8 +6,8 @@ char s[5000];
 int  m[20000] = { 32 },
 	 L = 1,
      program_counter,
-     T[500],
-     *S = T,
+     stack[500],
+     *stack_ptr = stack,
      t = 64,
      w,
      top_of_stack;
@@ -37,24 +37,24 @@ void r(int x)
 			program_counter = m[m[1]--];
 			break;
 		case 15:
-			top_of_stack = S[-top_of_stack];
+			top_of_stack = stack_ptr[-top_of_stack];
 			break;
 		case 1:
 			m[m[0]++] = x;
 			break;
 		case 9:
-			top_of_stack *= *S--;
+			top_of_stack *= *stack_ptr--;
 			break;
 		case 7:
-			m[top_of_stack] = *S--;
-			top_of_stack = *S--;
+			m[top_of_stack] = *stack_ptr--;
+			top_of_stack = *stack_ptr--;
 			break;
 		case 0:
-			*++S = top_of_stack;
+			*++stack_ptr = top_of_stack;
 			top_of_stack = m[program_counter++];
 			break;
 		case 8:
-			top_of_stack = *S-- - top_of_stack;
+			top_of_stack = *stack_ptr-- - top_of_stack;
 			break;
 		case 2:
 			m[++m[1]] = program_counter;
@@ -71,7 +71,7 @@ void r(int x)
 			top_of_stack = m[top_of_stack];
 			break;
 		case 10:
-			top_of_stack = *S-- / top_of_stack;
+			top_of_stack = *stack_ptr-- / top_of_stack;
 			break;
 		case 3:
 			a(1);
@@ -79,10 +79,10 @@ void r(int x)
 			break;
 		case 13:
 			putchar(top_of_stack);
-			top_of_stack = *S--;
+			top_of_stack = *stack_ptr--;
 			break;
 		case 14:
-			*++S = top_of_stack;
+			*++stack_ptr = top_of_stack;
 			top_of_stack = getchar();
 	}
 }
