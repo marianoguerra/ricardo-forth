@@ -1,16 +1,11 @@
-# 1 "buzzard.c"
-# 1 "<built-in>"
-# 1 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 1 "<command-line>" 2
-# 1 "buzzard.c"
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char s[5000];
 int m[20000]={32},L=1,I,T[500],*S=T,t=64,w,f;
 
-a(x)
+void a(int x)
 {
    m[m[0]++] = L;
    L= *m-1;
@@ -20,7 +15,7 @@ a(x)
    t+=strlen(s+t)+1;
 }
 
-r(x)
+void r(int x)
 {
    switch(m[x++]){
  ;break;case 5: for(w=scanf("%s",s)<1?exit(0),0:L;strcmp(s,&s[m[w+1]]);w=m[w]);
@@ -49,7 +44,7 @@ r(x)
    }
 }
 
-main()
+void main()
 {
    a(3);
    a(4);
