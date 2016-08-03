@@ -15,12 +15,16 @@ int  m[20000] = { 32 },
 // m[0]: dictionary pointer
 // m[1]: return stack index
 
+void append_to_dict(int val) {
+    m[m[0]++] = val;
+}
+
 void def_word(int codeword)
 {
-    m[m[0]++] = last_dict_entry;
+    append_to_dict(last_dict_entry);
     last_dict_entry = *m - 1;
-    m[m[0]++] = last_str_entry;
-    m[m[0]++] = codeword;
+    append_to_dict(last_str_entry);
+    append_to_dict(codeword);
     scanf("%s", str_mem + last_str_entry);
     last_str_entry += strlen(str_mem + last_str_entry) + 1;
 }
@@ -45,8 +49,8 @@ void r(int x)
             if (w - 1) {
                 r(w + 2);
             } else {
-                m[m[0]++] = 2;
-                m[m[0]++] = atoi(str_mem);
+                append_to_dict(2);
+                append_to_dict(atoi(str_mem));
             }
 
 			break;
@@ -57,7 +61,7 @@ void r(int x)
 			top_of_stack = stack_ptr[-top_of_stack];
 			break;
 		case 1:
-			m[m[0]++] = x;
+			append_to_dict(x);
 			break;
 		case 9:
 			top_of_stack *= *stack_ptr--;
@@ -82,7 +86,7 @@ void r(int x)
 			break;
 		case 4:
 			*m -= 2;
-			m[m[0]++] = 2;
+			append_to_dict(2);
 			break;
 		case 6:
 			top_of_stack = m[top_of_stack];
@@ -92,7 +96,7 @@ void r(int x)
 			break;
 		case 3:
 			def_word(1);
-			m[m[0]++] = 2;
+			append_to_dict(2);
 			break;
 		case 13:
 			putchar(top_of_stack);
@@ -110,15 +114,15 @@ void main()
     def_word(4);
     def_word(1);
     w = *m;
-    m[m[0]++] = 5;
-    m[m[0]++] = 2;
+    append_to_dict(5);
+    append_to_dict(2);
     program_counter = *m;
-    m[m[0]++] = w;
-    m[m[0]++] = program_counter - 1;
+    append_to_dict(w);
+    append_to_dict(program_counter - 1);
 
     for (w = 6; w < 16;) {
         def_word(1);
-        m[m[0]++] = w++;
+        append_to_dict(w++);
     }
 
     m[1] = *m;
