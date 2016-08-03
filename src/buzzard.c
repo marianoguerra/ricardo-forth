@@ -192,8 +192,9 @@ void main()
         append_to_dict(i);
     }
 
+    // top of return stack (grows upwards)
     m[1] = m[0];
-    // skip stack
+    // reserve 512 ints for stack, skip stack space in dict pointer
     m[0] += 512;
 
     while(1) {
