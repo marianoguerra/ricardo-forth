@@ -15,7 +15,7 @@ int  m[20000] = { 32 },
 // m[0]: dictionary pointer
 // m[1]: return stack index
 
-void a(int codeword)
+void def_word(int codeword)
 {
     m[m[0]++] = last_dict_entry;
     last_dict_entry = *m - 1;
@@ -74,7 +74,7 @@ void r(int x)
 			top_of_stack = *stack_ptr-- / top_of_stack;
 			break;
 		case 3:
-			a(1);
+			def_word(1);
 			m[m[0]++] = 2;
 			break;
 		case 13:
@@ -89,9 +89,9 @@ void r(int x)
 
 void main()
 {
-    a(3);
-    a(4);
-    a(1);
+    def_word(3);
+    def_word(4);
+    def_word(1);
     w = *m;
     m[m[0]++] = 5;
     m[m[0]++] = 2;
@@ -99,7 +99,7 @@ void main()
     m[m[0]++] = w;
     m[m[0]++] = program_counter - 1;
     for (w = 6; w < 16;)
-	a(1), m[m[0]++] = w++;
+	def_word(1), m[m[0]++] = w++;
     m[1] = *m;
     for (*m += 512;; r(m[program_counter++]));
 }
