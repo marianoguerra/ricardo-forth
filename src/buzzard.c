@@ -116,7 +116,8 @@ void r(int x)
         case CW_EXIT: // exit
             // leave the current function: pop the return stack into the
             // program counter
-			program_counter = m[m[1]--];
+			program_counter = m[m[1]];
+            m[1] -= 1;
 			break;
 		case CW__PICK: // _pick
 			top_of_stack = stack_ptr[-top_of_stack];
@@ -126,22 +127,29 @@ void r(int x)
 			append_to_dict(word_data_addr);
 			break;
 		case CW_MUL: // *
-			top_of_stack *= *stack_ptr--;
+			top_of_stack *= *stack_ptr;
+            stack_ptr -= 1;
 			break;
 		case CW_STORE: // !
-			m[top_of_stack] = *stack_ptr--;
-			top_of_stack = *stack_ptr--;
+			m[top_of_stack] = *stack_ptr;
+            stack_ptr -= 1;
+			top_of_stack = *stack_ptr;
+            stack_ptr -= 1;
 			break;
 		case CW_PUSHINT: // pushint
-			*++stack_ptr = top_of_stack;
-			top_of_stack = m[program_counter++];
+            stack_ptr += 1;
+			*stack_ptr = top_of_stack;
+			top_of_stack = m[program_counter];
+            program_counter += 1;
 			break;
 		case CW_SUB: // -
-			top_of_stack = *stack_ptr-- - top_of_stack;
+			top_of_stack = *stack_ptr - top_of_stack;
+            stack_ptr -= 1;
 			break;
 		case CW_RUN: // run code
             // push program counter into return stack
-			m[++m[1]] = program_counter;
+            m[1] += 1;
+			m[m[1]] = program_counter;
             // jump to the address of the data field for this word
 			program_counter = word_data_addr;
 			break;
@@ -156,7 +164,8 @@ void r(int x)
 			top_of_stack = m[top_of_stack];
 			break;
 		case CW_DIV: // /
-			top_of_stack = *stack_ptr-- / top_of_stack;
+			top_of_stack = *stack_ptr / top_of_stack;
+            stack_ptr -= 1;
 			break;
         case CW_DEFINE: // :
 			def_word(CW_COMPILE);
@@ -164,10 +173,12 @@ void r(int x)
 			break;
 		case CW_ECHO: // echo
 			putchar(top_of_stack);
-			top_of_stack = *stack_ptr--;
+			top_of_stack = *stack_ptr;
+            stack_ptr -= 1;
 			break;
 		case CW_KEY: // key
-			*++stack_ptr = top_of_stack;
+            stack_ptr += 1;
+			*stack_ptr = top_of_stack;
 			top_of_stack = getchar();
 	}
 }
