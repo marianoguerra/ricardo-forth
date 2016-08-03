@@ -2,6 +2,12 @@
 first:
 	gcc src/buzzard.c -o bin/first
 
+first-demo:
+	cat ./examples/demo1.1st | ./bin/first
+
+first-min:
+	cat ./examples/min.1st | ./bin/first
+
 second:
 	echo help | cat examples/third docs/help.th - | ./bin/first
 
