@@ -32,7 +32,13 @@ void r(int x)
 			for (w = scanf("%s", str_mem) < 1 ? exit(0), 0 : last_dict_entry;
 					strcmp(str_mem, &str_mem[m[w + 1]]); w = m[w]);
 
-			w - 1 ? r(w + 2) : (m[m[0]++] = 2, m[m[0]++] = atoi(str_mem));
+            if (w - 1) {
+                r(w + 2);
+            } else {
+                m[m[0]++] = 2;
+                m[m[0]++] = atoi(str_mem);
+            }
+
 			break;
 		case 12:
 			program_counter = m[m[1]--];
