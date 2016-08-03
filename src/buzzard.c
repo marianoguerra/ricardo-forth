@@ -21,11 +21,17 @@
 #define CW__PICK    15
 
 char str_mem[5000];
+// m[0] = 32 so that the first dictionary append is at index 32
 int  m[20000] = { 32 },
+     // when defining the first word (CW_DEFINE), address of prev word will be
+     // 1 which is used to know if we are at the first (last) dictionary
+     // definition when doing lookup on _read
 	 last_dict_entry = 1,
      program_counter,
      stack[500],
      *stack_ptr = stack,
+     // strings start at index 64 since first 64 bytes are used to read user
+     // input
      last_str_entry = 64,
      top_of_stack;
 
@@ -51,6 +57,8 @@ void r(int x)
     int read_count, val, entry_addr, entry_data_addr;
 	switch (m[x++]) {
 		case CW__READ: // _read
+            // first 64 bytes of str_mem are used to read user input, if
+            // word is larger than that it will overwrite word names
             read_count = scanf("%s", str_mem);
 
             if (read_count < 1) {
@@ -132,11 +140,14 @@ void r(int x)
 void main()
 {
     int i, tmp1;
-    // :
+    // : (codeword 3) 0, 1 and 2 are internal words with no names
+    // 0: pushint
+    // 1: compile
+    // 2: run
     def_word(CW_DEFINE);
-    // immediate
+    // immediate (codeword 4)
     def_word(CW_IMMED);
-    // _read
+    // _read (codeword 5)
     def_word(CW_COMPILE);
     tmp1 = m[0];
     append_to_dict(CW__READ);
