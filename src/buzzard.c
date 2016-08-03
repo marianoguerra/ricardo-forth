@@ -39,7 +39,9 @@ int  m[20000] = { 32 },
 // m[1]: return stack index
 
 void append_to_dict(int val) {
-    m[m[0]++] = val;
+    int addr = m[0];
+    m[addr] = val;
+    m[0] += 1;
 }
 
 void def_word(int codeword)
@@ -55,7 +57,8 @@ void def_word(int codeword)
 void r(int x)
 {
     int read_count, val, entry_addr, entry_data_addr;
-	switch (m[x++]) {
+    int word_data_addr = x + 1;
+	switch (m[x]) {
 		case CW__READ: // _read
             // first 64 bytes of str_mem are used to read user input, if
             // word is larger than that it will overwrite word names
@@ -110,14 +113,17 @@ void r(int x)
             }
 
 			break;
-		case CW_EXIT: // exit
+        case CW_EXIT: // exit
+            // leave the current function: pop the return stack into the
+            // program counter
 			program_counter = m[m[1]--];
 			break;
 		case CW__PICK: // _pick
 			top_of_stack = stack_ptr[-top_of_stack];
 			break;
 		case CW_COMPILE: // compile code
-			append_to_dict(x);
+            // a pointer to the word's data field is appended to the dictionary
+			append_to_dict(word_data_addr);
 			break;
 		case CW_MUL: // *
 			top_of_stack *= *stack_ptr--;
@@ -137,7 +143,7 @@ void r(int x)
             // push program counter into return stack
 			m[++m[1]] = program_counter;
             // jump to the address of the data field for this word
-			program_counter = x;
+			program_counter = word_data_addr;
 			break;
 		case CW_LT0: // <0
 			top_of_stack = 0 > top_of_stack;
@@ -168,7 +174,7 @@ void r(int x)
 
 void main()
 {
-    int i, tmp1;
+    int i, tmp1, word_to_execute;
     // : (codeword 3) 0, 1 and 2 are internal words with no names
     // 0: pushint
     // 1: compile
@@ -198,6 +204,8 @@ void main()
     m[0] += 512;
 
     while(1) {
-        r(m[program_counter++]);
+        word_to_execute = m[program_counter];
+        program_counter += 1;
+        r(word_to_execute);
     }
 }
