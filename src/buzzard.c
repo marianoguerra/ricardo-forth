@@ -30,7 +30,7 @@ int  m[20000] = { 32 },
      // when defining the first word (CW_DEFINE), address of prev word will be
      // 1 which is used to know if we are at the first (last) dictionary
      // definition when doing lookup on _read
-	 last_dict_entry = 1,
+     last_dict_entry = 1,
      program_counter,
      stack[500],
      *stack_ptr = stack,
@@ -63,8 +63,8 @@ void r(int word_addr)
     int read_count, val, entry_addr, entry_data_addr;
     int next_word = word_addr + 1;
     int codeword = m[word_addr];
-	switch (codeword) {
-		case CW__READ: // _read
+    switch (codeword) {
+        case CW__READ: // _read
             // first 64 bytes of str_mem are used to read user input, if
             // word is larger than that it will overwrite word names
             read_count = scanf("%s", str_mem);
@@ -118,75 +118,75 @@ void r(int word_addr)
                 append_to_dict(val);
             }
 
-			break;
+            break;
         case CW_EXIT: // exit
             // leave the current function: pop the return stack into the
             // program counter
-			program_counter = m[m[1]];
+            program_counter = m[m[1]];
             m[1] -= 1;
-			break;
-		case CW__PICK: // _pick
-			top_of_stack = stack_ptr[-top_of_stack];
-			break;
-		case CW_COMPILE: // compile code
+            break;
+        case CW__PICK: // _pick
+            top_of_stack = stack_ptr[-top_of_stack];
+            break;
+        case CW_COMPILE: // compile code
             // a pointer to the next word is appended to the dictionary
-			append_to_dict(next_word);
-			break;
-		case CW_MUL: // *
-			top_of_stack *= *stack_ptr;
+            append_to_dict(next_word);
+            break;
+        case CW_MUL: // *
+            top_of_stack *= *stack_ptr;
             stack_ptr -= 1;
-			break;
-		case CW_STORE: // !
-			m[top_of_stack] = *stack_ptr;
+            break;
+        case CW_STORE: // !
+            m[top_of_stack] = *stack_ptr;
             stack_ptr -= 1;
-			top_of_stack = *stack_ptr;
+            top_of_stack = *stack_ptr;
             stack_ptr -= 1;
-			break;
-		case CW_PUSHINT: // pushint
+            break;
+        case CW_PUSHINT: // pushint
             stack_ptr += 1;
-			*stack_ptr = top_of_stack;
-			top_of_stack = m[program_counter];
+            *stack_ptr = top_of_stack;
+            top_of_stack = m[program_counter];
             program_counter += 1;
-			break;
-		case CW_SUB: // -
-			top_of_stack = *stack_ptr - top_of_stack;
+            break;
+        case CW_SUB: // -
+            top_of_stack = *stack_ptr - top_of_stack;
             stack_ptr -= 1;
-			break;
-		case CW_RUN: // run code
+            break;
+        case CW_RUN: // run code
             // push program counter into return stack
             m[1] += 1;
-			m[m[1]] = program_counter;
+            m[m[1]] = program_counter;
             // jump to the address of the next word
-			program_counter = next_word;
-			break;
-		case CW_LT0: // <0
-			top_of_stack = 0 > top_of_stack;
-			break;
-		case CW_IMMED: // immediate
-			*m -= 2;
-			append_to_dict(CW_RUN);
-			break;
-		case CW_FETCH: // @
-			top_of_stack = m[top_of_stack];
-			break;
-		case CW_DIV: // /
-			top_of_stack = *stack_ptr / top_of_stack;
+            program_counter = next_word;
+            break;
+        case CW_LT0: // <0
+            top_of_stack = 0 > top_of_stack;
+            break;
+        case CW_IMMED: // immediate
+            *m -= 2;
+            append_to_dict(CW_RUN);
+            break;
+        case CW_FETCH: // @
+            top_of_stack = m[top_of_stack];
+            break;
+        case CW_DIV: // /
+            top_of_stack = *stack_ptr / top_of_stack;
             stack_ptr -= 1;
-			break;
+            break;
         case CW_DEFINE: // :
-			def_word(CW_COMPILE);
-			append_to_dict(CW_RUN);
-			break;
-		case CW_ECHO: // echo
-			putchar(top_of_stack);
-			top_of_stack = *stack_ptr;
+            def_word(CW_COMPILE);
+            append_to_dict(CW_RUN);
+            break;
+        case CW_ECHO: // echo
+            putchar(top_of_stack);
+            top_of_stack = *stack_ptr;
             stack_ptr -= 1;
-			break;
-		case CW_KEY: // key
+            break;
+        case CW_KEY: // key
             stack_ptr += 1;
-			*stack_ptr = top_of_stack;
-			top_of_stack = getchar();
-	}
+            *stack_ptr = top_of_stack;
+            top_of_stack = getchar();
+    }
 }
 
 void main()
