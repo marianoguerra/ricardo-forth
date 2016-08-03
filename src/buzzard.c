@@ -51,7 +51,7 @@ void append_to_dict(int val) {
 void def_word(int codeword)
 {
     append_to_dict(last_dict_entry);
-    last_dict_entry = *m - 1;
+    last_dict_entry = m[0] - 1;
     append_to_dict(last_str_entry);
     append_to_dict(codeword);
     scanf("%s", str_mem + last_str_entry);
@@ -163,7 +163,7 @@ void r(int word_addr)
             top_of_stack = 0 > top_of_stack;
             break;
         case CW_IMMED: // immediate
-            *m -= 2;
+            m[0] -= 2;
             append_to_dict(CW_RUN);
             break;
         case CW_FETCH: // @
