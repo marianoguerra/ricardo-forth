@@ -199,7 +199,18 @@ void main()
     def_word(CW_DEFINE);
     // immediate (codeword 4)
     def_word(CW_IMMED);
-    // _read (codeword 5)
+
+    // define the read loop, by defining the word _read as
+    // 40: CW_COMPILE
+    // 41: CW__READ
+    // 42: CW_RUN
+    // 43: 41
+    // 44: 42
+    //
+    // from the design file: FIRST builds a very small word internally that it
+    // executes as its main loop.  This word calls _read and then calls itself.
+    // Each time it calls itself, it uses up a word on the return stack, so it
+    // will eventually trash things.
     def_word(CW_COMPILE);
     tmp1 = m[0];
     append_to_dict(CW__READ);
@@ -224,6 +235,8 @@ void main()
     // reserve 512 ints for stack, skip stack space in dict pointer
     m[0] += 512;
 
+    // at the beginning of the loop program_counter points to 43
+    // which will call read and then call itself for the loop
     while(1) {
         word_to_execute = m[program_counter];
         program_counter += 1;
