@@ -5,7 +5,7 @@
 char s[5000];
 int  m[20000] = { 32 },
 	 L = 1,
-     I,
+     program_counter,
      T[500],
      *S = T,
      t = 64,
@@ -34,7 +34,7 @@ void r(int x)
 			w - 1 ? r(w + 2) : (m[m[0]++] = 2, m[m[0]++] = atoi(s));
 			break;
 		case 12:
-			I = m[m[1]--];
+			program_counter = m[m[1]--];
 			break;
 		case 15:
 			top_of_stack = S[-top_of_stack];
@@ -51,14 +51,14 @@ void r(int x)
 			break;
 		case 0:
 			*++S = top_of_stack;
-			top_of_stack = m[I++];
+			top_of_stack = m[program_counter++];
 			break;
 		case 8:
 			top_of_stack = *S-- - top_of_stack;
 			break;
 		case 2:
-			m[++m[1]] = I;
-			I = x;
+			m[++m[1]] = program_counter;
+			program_counter = x;
 			break;
 		case 11:
 			top_of_stack = 0 > top_of_stack;
@@ -95,11 +95,11 @@ void main()
     w = *m;
     m[m[0]++] = 5;
     m[m[0]++] = 2;
-    I = *m;
+    program_counter = *m;
     m[m[0]++] = w;
-    m[m[0]++] = I - 1;
+    m[m[0]++] = program_counter - 1;
     for (w = 6; w < 16;)
 	a(1), m[m[0]++] = w++;
     m[1] = *m;
-    for (*m += 512;; r(m[I++]));
+    for (*m += 512;; r(m[program_counter++]));
 }
