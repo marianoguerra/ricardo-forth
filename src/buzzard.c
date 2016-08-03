@@ -67,6 +67,30 @@ void r(int x)
                 entry_addr = last_dict_entry;
             }
 
+            // entry_addr will start from the end of the dictionary,
+            // pointing to the beginning of the entry, it will get the value
+            // of m[entry_addr + 1] (entry_addr + 1 points to the address of
+            // the word name in str_mem)
+            // then we will use that address to get the address of the name on
+            // str_mem and compare it against str_mem
+            // (remember that first 64 bytes of str_mem are used for user
+            // input)
+            // if strings are the same, that is, the word the user entered is
+            // the same as the name of the word we are pointing with entry_addr
+            // then strcmp will return 0 and we will exit the loop
+            // if it's not equal we will move to the previous entry which
+            // is stored at entry_addr + 0
+            //
+            // the interesting part happens when we are at the first entry and
+            // it doesn't match, the address of the previous entry for the
+            // first entry is set to 1 (the initial value of last_dict_entry at
+            // the top of the file), which is the fake address of the
+            // pushint word, when we try to get the string address of the
+            // pushint word (m[entry_addr + 1], which is m[2]) the value of
+            // m[2] is always 0, which makes str_mem[0] and of course
+            // strcmp(str_mem, &str_mem[0]) == 0 because a string is equal to
+            // itself and we exit the loop, now entry_addr is 1 and we can
+            // use that to check if we found the word or not.
             while (strcmp(str_mem, &str_mem[m[entry_addr + 1]])) {
                 entry_addr = m[entry_addr];
             }
