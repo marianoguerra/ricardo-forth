@@ -115,10 +115,10 @@ void main()
     def_word(3);
     def_word(4);
     def_word(1);
-    w = *m;
+    w = m[0];
     append_to_dict(5);
     append_to_dict(2);
-    program_counter = *m;
+    program_counter = m[0];
     append_to_dict(w);
     append_to_dict(program_counter - 1);
 
@@ -127,8 +127,8 @@ void main()
         append_to_dict(w++);
     }
 
-    m[1] = *m;
-    *m += 512;
+    m[1] = m[0];
+    m[0] += 512;
 
     while(1) {
         r(m[program_counter++]);
