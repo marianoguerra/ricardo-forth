@@ -95,10 +95,15 @@ void r(int x)
                 entry_addr = m[entry_addr];
             }
 
+            // if entry_addr != 1 then the word the user entered exists, so
+            // we run it
             if (entry_addr != 1) {
+                // we calculate the address of the data for the entry
                 entry_data_addr = entry_addr + 2;
+                // and run it
                 r(entry_data_addr);
             } else {
+                // if we didn't find the entry we assume it's a number
                 append_to_dict(CW_RUN);
                 val = atoi(str_mem);
                 append_to_dict(val);
