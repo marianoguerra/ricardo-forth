@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-char s[5000];
+char str_mem[5000];
 int  m[20000] = { 32 },
-	 L = 1,
+	 last_dict_entry = 1,
      program_counter,
      stack[500],
      *stack_ptr = stack,
-     t = 64,
+     last_str_entry = 64,
      w,
      top_of_stack;
 
@@ -17,21 +17,21 @@ int  m[20000] = { 32 },
 
 void a(int x)
 {
-    m[m[0]++] = L;
-    L = *m - 1;
-    m[m[0]++] = t;
+    m[m[0]++] = last_dict_entry;
+    last_dict_entry = *m - 1;
+    m[m[0]++] = last_str_entry;
     m[m[0]++] = x;
-    scanf("%s", s + t);
-    t += strlen(s + t) + 1;
+    scanf("%s", str_mem + last_str_entry);
+    last_str_entry += strlen(str_mem + last_str_entry) + 1;
 }
 
 void r(int x)
 {
 	switch (m[x++]) {
 		case 5:
-			for (w = scanf("%s", s) < 1 ? exit(0), 0 : L;
-					strcmp(s, &s[m[w + 1]]); w = m[w]);
-			w - 1 ? r(w + 2) : (m[m[0]++] = 2, m[m[0]++] = atoi(s));
+			for (w = scanf("%s", str_mem) < 1 ? exit(0), 0 : last_dict_entry;
+					strcmp(str_mem, &str_mem[m[w + 1]]); w = m[w]);
+			w - 1 ? r(w + 2) : (m[m[0]++] = 2, m[m[0]++] = atoi(str_mem));
 			break;
 		case 12:
 			program_counter = m[m[1]--];
