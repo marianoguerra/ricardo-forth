@@ -33,7 +33,7 @@ void r(int x)
 {
     int read_count;
 	switch (m[x++]) {
-		case 5:
+		case 5: // _read
             read_count = scanf("%s", str_mem);
 
             if (read_count < 1) {
@@ -54,55 +54,57 @@ void r(int x)
             }
 
 			break;
-		case 12:
+		case 12: // exit
 			program_counter = m[m[1]--];
 			break;
-		case 15:
+		case 15: // _pick
 			top_of_stack = stack_ptr[-top_of_stack];
 			break;
 		case 1:
 			append_to_dict(x);
 			break;
-		case 9:
+		case 9: // *
 			top_of_stack *= *stack_ptr--;
 			break;
-		case 7:
+		case 7: // !
 			m[top_of_stack] = *stack_ptr--;
 			top_of_stack = *stack_ptr--;
 			break;
-		case 0:
+		case 0: // pushint
 			*++stack_ptr = top_of_stack;
 			top_of_stack = m[program_counter++];
 			break;
-		case 8:
+		case 8: // -
 			top_of_stack = *stack_ptr-- - top_of_stack;
 			break;
-		case 2:
+		case 2: // run code
+            // push program counter into return stack
 			m[++m[1]] = program_counter;
+            // jump to the address of the data field for this word
 			program_counter = x;
 			break;
-		case 11:
+		case 11: // <0
 			top_of_stack = 0 > top_of_stack;
 			break;
-		case 4:
+		case 4: // immediate
 			*m -= 2;
 			append_to_dict(2);
 			break;
-		case 6:
+		case 6: // @
 			top_of_stack = m[top_of_stack];
 			break;
-		case 10:
+		case 10: // /
 			top_of_stack = *stack_ptr-- / top_of_stack;
 			break;
-		case 3:
+        case 3: // :
 			def_word(1);
 			append_to_dict(2);
 			break;
-		case 13:
+		case 13: // echo
 			putchar(top_of_stack);
 			top_of_stack = *stack_ptr--;
 			break;
-		case 14:
+		case 14: // key
 			*++stack_ptr = top_of_stack;
 			top_of_stack = getchar();
 	}
