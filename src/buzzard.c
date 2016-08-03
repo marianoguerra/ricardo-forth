@@ -20,6 +20,10 @@
 #define CW_KEY      14
 #define CW__PICK    15
 
+// if we encounter a 2 and we call r with it, it will lookup the codeword
+// stored at m[2] which is 0, which means pushint
+#define ADDR_OF_PUSHINT 2
+
 char str_mem[5000];
 // m[0] = 32 so that the first dictionary append is at index 32
 int  m[20000] = { 32 },
@@ -54,11 +58,12 @@ void def_word(int codeword)
     last_str_entry += strlen(str_mem + last_str_entry) + 1;
 }
 
-void r(int x)
+void r(int word_addr)
 {
     int read_count, val, entry_addr, entry_data_addr;
-    int word_data_addr = x + 1;
-	switch (m[x]) {
+    int word_data_addr = word_addr + 1;
+    int codeword = m[word_addr];
+	switch (codeword) {
 		case CW__READ: // _read
             // first 64 bytes of str_mem are used to read user input, if
             // word is larger than that it will overwrite word names
@@ -106,8 +111,9 @@ void r(int x)
                 // and run it
                 r(entry_data_addr);
             } else {
-                // if we didn't find the entry we assume it's a number
-                append_to_dict(CW_RUN);
+                // if we didn't find the entry we assume it's a number we
+                // append the addr of pushint instruction and then the number
+                append_to_dict(ADDR_OF_PUSHINT);
                 val = atoi(str_mem);
                 append_to_dict(val);
             }
@@ -204,6 +210,10 @@ void main()
     // appends 42
     append_to_dict(program_counter - 1);
 
+    // define the rest of builtin words
+    // they will have two instructions
+    // CW_COMPILE and the builtin codeword for them, a number from 6 to 15
+    // 6: @ 7: ! 8: - 9: * 10: / 11: <0 12: exit 13: echo 14: key 15: _pick
     for (i = 6; i < 16; i += 1) {
         def_word(CW_COMPILE);
         append_to_dict(i);
