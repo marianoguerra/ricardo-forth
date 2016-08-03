@@ -61,7 +61,7 @@ void def_word(int codeword)
 void r(int word_addr)
 {
     int read_count, val, entry_addr, entry_data_addr;
-    int word_data_addr = word_addr + 1;
+    int next_word = word_addr + 1;
     int codeword = m[word_addr];
 	switch (codeword) {
 		case CW__READ: // _read
@@ -129,8 +129,8 @@ void r(int word_addr)
 			top_of_stack = stack_ptr[-top_of_stack];
 			break;
 		case CW_COMPILE: // compile code
-            // a pointer to the word's data field is appended to the dictionary
-			append_to_dict(word_data_addr);
+            // a pointer to the next word is appended to the dictionary
+			append_to_dict(next_word);
 			break;
 		case CW_MUL: // *
 			top_of_stack *= *stack_ptr;
@@ -156,8 +156,8 @@ void r(int word_addr)
             // push program counter into return stack
             m[1] += 1;
 			m[m[1]] = program_counter;
-            // jump to the address of the data field for this word
-			program_counter = word_data_addr;
+            // jump to the address of the next word
+			program_counter = next_word;
 			break;
 		case CW_LT0: // <0
 			top_of_stack = 0 > top_of_stack;
