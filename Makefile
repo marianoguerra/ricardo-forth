@@ -2,6 +2,9 @@
 first:
 	gcc src/buzzard.c -o bin/first
 
+first.wasm:
+	wasm-as src/buzzard.wast -o bin/first.wasm
+
 first-demo:
 	cat ./examples/demo1.1st | ./bin/first
 
