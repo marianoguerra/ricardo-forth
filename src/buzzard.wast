@@ -424,6 +424,7 @@
         (call $set-dict-ptr (i32.const 544))
         (call $set-last-str-entry (i32.const 20064))
         (call $set-stack-ptr (i32.const 25000))
+        (call $set-last-dict-entry (i32.const 4))
 
         ;; def_word(CW_DEFINE);
         (call $def-word (i32.const 3))
