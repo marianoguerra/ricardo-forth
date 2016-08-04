@@ -10,6 +10,8 @@
 
     (export "m" memory)
     (export "main" $main)
+    (export "loadI32" $load-i32)
+    (export "loadU8" $load-u8)
 
     (import $read-word-into "lib" "readWordInto" (param i32) (result i32))
     (import $getchar "lib" "getchar" (result i32))
@@ -19,6 +21,7 @@
     ;; strcmp(offset1, offset2) (offsets into m)
     (import $strcmp "lib" "strcmp" (param i32 i32) (result i32))
     (import $signal-error "lib" "signalError" (param i32 i32))
+    (import $debug "lib" "debug" (param i32 i32))
 
     ;; Start registers section
 
@@ -81,6 +84,13 @@
 
 
     ;; End registers section
+
+    ;; utility for debugging
+    (func $load-i32 (param $addr i32) (result i32)
+        (i32.load (get_local $addr)))
+
+    (func $load-u8 (param $addr i32) (result i32)
+        (i32.load8_u (get_local $addr)))
 
     (func $append-to-dict (param $val i32)
         ;; int addr;
