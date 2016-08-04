@@ -344,12 +344,13 @@
                 ;; while (strcmp(str_mem, &str_mem[m[entry_addr + 1]])) {
                 (loop $exit-while $next-while
                     (br_if $exit-while
-                     (call_import $strcmp
-                      ;; offset of str_mem (user input)
-                      (i32.const 20000)
-                      ;; address in memory of the start of the name of this entry
-                      (i32.load (i32.add (get_local $entry-addr)
-                                 (i32.const 4)))))
+                     (i32.eq (i32.const 0)
+                      (call_import $strcmp
+                       ;; offset of str_mem (user input)
+                       (i32.const 20000)
+                       ;; address in memory of the start of the name of this entry
+                       (i32.load (i32.add (get_local $entry-addr)
+                                  (i32.const 4))))))
 
                     ;; entry_addr = m[entry_addr];
                     (set_local $entry-addr (i32.load (get_local $entry-addr)))
