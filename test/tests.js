@@ -94,7 +94,6 @@ function __testBuzzard(t, helloWorld, third, demo1, demo2, demo3, demo4, demo5) 
         assert.throws(vm.main, function (error) {
             assert.ok(error instanceof Error);
             assert.equal(error.message, "EOF");
-            console.log(readDict(vm));
             assert.equal(vm.lib.output, "Welcome to THIRD.\nOk.\nThe factorial of 3 is: 6 \nThe factorial of 5 is: 120 \n");
             return true;
         });
