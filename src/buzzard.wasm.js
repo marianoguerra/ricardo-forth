@@ -162,10 +162,14 @@
         function readEntry(addr) {
             var nameAddr = lib.loadI32(addr + 4);
             return {
+                address: addr,
                 prev: lib.loadI32(addr),
                 nameAddr: nameAddr,
                 name: readCString(nameAddr),
-                codeword: lib.loadI32(addr + 8)
+                codeword: lib.loadI32(addr + 8),
+                nextWords: [1, 2, 3, 4, 5].map(function (i) {
+                    return lib.loadI32(addr + 8 + (4 * i));
+                })
             };
         }
 
@@ -185,7 +189,7 @@
                 }
 
                 entryAddr = entry.prev;
-            } while (entryAddr !== 4);
+            } while (entryAddr !== 8);
 
             accum.reverse();
             return accum;
