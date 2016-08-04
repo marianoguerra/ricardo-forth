@@ -404,12 +404,14 @@
 
             ;; $cw_run
                 ;; m[1] += 1;
-
                 (call $set-ret-stack-idx (i32.add (call $ret-stack-idx)
                                           (i32.const 4)))
 
                 ;; m[m[1]] = program_counter;
+                (i32.store (call $ret-stack-idx) (call $program-counter))
+
                 ;; program_counter = next_word;
+                (call $set-program-counter (get_local $next-word))
 
                 ;; break
                 (br $break))
