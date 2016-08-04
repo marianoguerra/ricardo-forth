@@ -358,9 +358,8 @@
                     (br $next-while))
                 ;; }
 
-
                 ;; if (entry_addr != 1) {
-                (if (i32.ne (get_local $entry-addr) (i32.const 1))
+                (if (i32.ne (get_local $entry-addr) (i32.const 4))
                     (block
                 ;;     entry_data_addr = entry_addr + 2;
                         (set_local $entry-data-addr
