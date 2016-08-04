@@ -118,6 +118,9 @@
         ;; append_to_dict(last_str_entry);
         (call $append-to-dict (call $last-str-entry))
 
+        ;; append_to_dict(codeword);
+        (call $append-to-dict (get_local $codeword))
+
         ;; next two lines aren't direct translation
         ;; scanf("%s", str_mem + last_str_entry);
         (set_local $read-len
