@@ -143,264 +143,45 @@
         ;; codeword = m[word_addr];
         (set_local $codeword (i32.load (get_local $word-addr)))
 
+        (call_import $debug (i32.const 0) (get_local $word-addr))
+        (call_import $debug (i32.const 1) (get_local $codeword))
+
         ;; label to implement break out of cases
         (block $break
         ;; case 0
         (block $cw_pushint
-
-            ;; stack_ptr += 1;
-            (call $set-stack-ptr (i32.add (call $stack-ptr) (i32.const 4)))
-
-            ;; *stack_ptr = top_of_stack;
-            (i32.store (call $stack-ptr) (call $top-of-stack))
-
-            ;; top_of_stack = m[program_counter];
-            (call $set-top-of-stack (i32.load (call $program-counter)))
-
-            ;; program_counter += 1;
-            (call $set-program-counter (i32.add (call $program-counter)
-                                        (i32.const 1)))
-
-            ;; break
-            (br $break)
-
         ;; case 1
         (block $cw_compile
-
-            ;; append_to_dict(next_word);
-            (call $append-to-dict (get_local $next-word))
-
-            ;; break
-            (br $break)
-
         ;; case 2
         (block $cw_run
-
-            ;; m[1] += 1;
-
-            (call $set-ret-stack-idx (i32.add (call $ret-stack-idx)
-                                      (i32.const 4)))
-
-            ;; m[m[1]] = program_counter;
-            ;; program_counter = next_word;
-
-            ;; break
-            (br $break)
-
         ;; case 3
         (block $cw_define
-
-            ;; def_word(CW_COMPILE);
-            (call $def-word (i32.const 1))
-
-            ;; append_to_dict(CW_RUN);
-            (call $append-to-dict (i32.const 2))
-
-            ;; break
-            (br $break)
-
         ;; case 4
         (block $cw_immed
-
-            ;; m[0] -= 2;
-            (call $set-dict-ptr (i32.sub (call $dict-ptr) (i32.const 8)))
-
-            ;; append_to_dict(CW_RUN);
-            (call $append-to-dict (i32.const 2))
-
-            ;; break
-            (br $break)
-
         ;; case 5
         (block $cw__read
-
-            ;; read_count = scanf("%s", str_mem);
-            (set_local $read-count (call_import $read-word-into (i32.const 20000)))
-
-            ;; if (read_count < 1) {
-            (if (i32.lt_s (get_local $read-count) (i32.const 1))
-
-             ;; exit(0);
-             ;; ERROR 2 0: exit with status 0
-             (call_import $signal-error (i32.const 2) (i32.const 0))
-
-             ;; } else {
-             ;;   entry_addr = last_dict_entry;
-             (set_local $entry-addr (call $last-dict-entry)))
-
-            ;;}
-
-            ;; while (strcmp(str_mem, &str_mem[m[entry_addr + 1]])) {
-            (loop $exit-while $next-while
-                (br_if $exit-while
-                 (call_import $strcmp
-                  ;; offset of str_mem (user input)
-                  (i32.const 20000)
-                  ;; address in memory of the start of the name of this entry
-                  (i32.load (i32.add (get_local $entry-addr)
-                             (i32.const 4)))))
-
-                ;; entry_addr = m[entry_addr];
-                (set_local $entry-addr (i32.load (get_local $entry-addr)))
-
-                (br $next-while))
-            ;; }
-
-
-            ;; if (entry_addr != 1) {
-            (if (i32.ne (get_local $entry-addr) (i32.const 1))
-                (block
-            ;;     entry_data_addr = entry_addr + 2;
-                    (set_local $entry-data-addr
-                        (i32.add (get_local $entry-addr) (i32.const 8)))
-
-            ;;     r(entry_data_addr);
-                    (call $r (get_local $entry-data-addr)))
-
-
-            ;; } else {
-                (block
-            ;;     append_to_dict(ADDR_OF_PUSHINT);
-                    (call $append-to-dict (i32.const 2))
-            ;;     val = atoi(str_mem);
-                    (set_local $val (call_import $atoi (i32.const 20000)))
-            ;;     append_to_dict(val);
-                    (call $append-to-dict (get_local $val))))
-            ;; }
-
-            ;; break
-            (br $break)
-
         ;; case 6
         (block $cw_fetch
-
-            ;; top_of_stack = m[top_of_stack];
-            (call $set-top-of-stack (i32.load (call $top-of-stack)))
-
-            ;; break
-            (br $break)
-
         ;; case 7
         (block $cw_store
-
-            ;; m[top_of_stack] = *stack_ptr;
-
-            (i32.store (call $top-of-stack) (i32.load (call $stack-ptr)))
-
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; top_of_stack = *stack_ptr;
-            (call $set-top-of-stack (i32.load (call $stack-ptr)))
-
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 8
         (block $cw_sub
-
-            ;; top_of_stack = *stack_ptr - top_of_stack;
-            (call $set-top-of-stack (i32.sub (i32.load (call $stack-ptr))
-                                     (call $top-of-stack)))
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 9
         (block $cw_mul
-
-            ;; top_of_stack *= *stack_ptr;
-            (call $set-top-of-stack (i32.mul (call $top-of-stack)
-                                     (i32.load (call $stack-ptr))))
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 10
         (block $cw_div
-
-            ;; top_of_stack = *stack_ptr / top_of_stack;
-            (call $set-top-of-stack (i32.mul (i32.load (call $stack-ptr))
-                                     (call $top-of-stack)))
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 11
         (block $cw_lt0
-
-            ;; top_of_stack = 0 > top_of_stack;
-            ;; won't translate it as yoda
-            (call $set-top-of-stack (i32.lt_s (call $top-of-stack)
-                                     (i32.const 0)))
-
-            ;; break
-            (br $break)
-
         ;; case 12
         (block $cw_exit
-
-            ;; program_counter = m[m[1]];
-            (call $set-program-counter (i32.load (call $ret-stack-idx)))
-
-            ;; m[1] -= 1;
-            (call $set-ret-stack-idx (i32.sub (call $ret-stack-idx)
-                                      (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 13
         (block $cw_echo
-
-            ;; putchar(top_of_stack);
-            (call_import $putchar (call $top-of-stack))
-
-            ;; top_of_stack = *stack_ptr;
-            (call $set-top-of-stack (i32.load (call $stack-ptr)))
-
-            ;; stack_ptr -= 1;
-            (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
-
-            ;; break
-            (br $break)
-
         ;; case 14
         (block $cw_key
-
-            ;; stack_ptr += 1;
-            (call $set-stack-ptr (i32.add (call $stack-ptr) (i32.const 4)))
-
-            ;; *stack_ptr = top_of_stack;
-            (i32.store (call $stack-ptr) (call $top-of-stack))
-
-            ;; top_of_stack = getchar();
-            (call $set-top-of-stack (call_import $getchar))
-
-            ;; break
-            (br $break)
-
         ;; case 15
         (block $cw__pick
-
-
         ;; default:
         (block $cw_not_found
-
-            ;; ERROR 1 0: codeword not found
-            (call_import $signal-error (i32.const 1) (i32.const 0))
-
-            ;; break
-            (br $break)
 
         (br_table
             $cw_pushint
@@ -422,7 +203,238 @@
 
             $cw_not_found
 
-            (get_local $codeword)))))))))))))))))))))
+            (get_local $codeword)))
+
+            ;; $cw_not_found
+                ;; ERROR 1 0: codeword not found
+                (call_import $signal-error (i32.const 1) (i32.const 0))
+
+                ;; break
+                (br $break))
+
+
+            ;; $cw__pick
+
+                ;; top_of_stack = stack_ptr[-top_of_stack];
+                (call $set-top-of-stack (i32.load (i32.sub (call $stack-ptr)
+                                                   (call $top-of-stack))))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_key
+                ;; stack_ptr += 1;
+                (call $set-stack-ptr (i32.add (call $stack-ptr) (i32.const 4)))
+
+                ;; *stack_ptr = top_of_stack;
+                (i32.store (call $stack-ptr) (call $top-of-stack))
+
+                ;; top_of_stack = getchar();
+                (call $set-top-of-stack (call_import $getchar))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_echo
+                ;; putchar(top_of_stack);
+                (call_import $putchar (call $top-of-stack))
+
+                ;; top_of_stack = *stack_ptr;
+                (call $set-top-of-stack (i32.load (call $stack-ptr)))
+
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_exit
+                ;; program_counter = m[m[1]];
+                (call $set-program-counter (i32.load (call $ret-stack-idx)))
+
+                ;; m[1] -= 1;
+                (call $set-ret-stack-idx (i32.sub (call $ret-stack-idx)
+                                          (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_lt0
+                ;; top_of_stack = 0 > top_of_stack;
+                ;; won't translate it as yoda
+                (call $set-top-of-stack (i32.lt_s (call $top-of-stack)
+                                         (i32.const 0)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_div
+                ;; top_of_stack = *stack_ptr / top_of_stack;
+                (call $set-top-of-stack (i32.mul (i32.load (call $stack-ptr))
+                                         (call $top-of-stack)))
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_mul
+                ;; top_of_stack *= *stack_ptr;
+                (call $set-top-of-stack (i32.mul (call $top-of-stack)
+                                         (i32.load (call $stack-ptr))))
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_sub
+                ;; top_of_stack = *stack_ptr - top_of_stack;
+                (call $set-top-of-stack (i32.sub (i32.load (call $stack-ptr))
+                                         (call $top-of-stack)))
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_store
+                ;; m[top_of_stack] = *stack_ptr;
+
+                (i32.store (call $top-of-stack) (i32.load (call $stack-ptr)))
+
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; top_of_stack = *stack_ptr;
+                (call $set-top-of-stack (i32.load (call $stack-ptr)))
+
+                ;; stack_ptr -= 1;
+                (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_fetch
+                ;; top_of_stack = m[top_of_stack];
+                (call $set-top-of-stack (i32.load (call $top-of-stack)))
+
+                ;; break
+                (br $break))
+
+            ;; $cw__read
+                ;; read_count = scanf("%s", str_mem);
+                (set_local $read-count (call_import $read-word-into (i32.const 20000)))
+
+                ;; if (read_count < 1) {
+                (if (i32.lt_s (get_local $read-count) (i32.const 1))
+
+                 ;; exit(0);
+                 ;; ERROR 2 0: exit with status 0
+                 (call_import $signal-error (i32.const 2) (i32.const 0))
+
+                 ;; } else {
+                 ;;   entry_addr = last_dict_entry;
+                 (set_local $entry-addr (call $last-dict-entry)))
+
+                ;;}
+
+                ;; while (strcmp(str_mem, &str_mem[m[entry_addr + 1]])) {
+                (loop $exit-while $next-while
+                    (br_if $exit-while
+                     (call_import $strcmp
+                      ;; offset of str_mem (user input)
+                      (i32.const 20000)
+                      ;; address in memory of the start of the name of this entry
+                      (i32.load (i32.add (get_local $entry-addr)
+                                 (i32.const 4)))))
+
+                    ;; entry_addr = m[entry_addr];
+                    (set_local $entry-addr (i32.load (get_local $entry-addr)))
+
+                    (br $next-while))
+                ;; }
+
+
+                ;; if (entry_addr != 1) {
+                (if (i32.ne (get_local $entry-addr) (i32.const 1))
+                    (block
+                ;;     entry_data_addr = entry_addr + 2;
+                        (set_local $entry-data-addr
+                            (i32.add (get_local $entry-addr) (i32.const 8)))
+
+                ;;     r(entry_data_addr);
+                        (call $r (get_local $entry-data-addr)))
+
+
+                ;; } else {
+                    (block
+                ;;     append_to_dict(ADDR_OF_PUSHINT);
+                        (call $append-to-dict (i32.const 2))
+                ;;     val = atoi(str_mem);
+                        (set_local $val (call_import $atoi (i32.const 20000)))
+                ;;     append_to_dict(val);
+                        (call $append-to-dict (get_local $val))))
+                ;; }
+
+                ;; break
+                (br $break))
+
+            ;; cw_immed
+                ;; m[0] -= 2;
+                (call $set-dict-ptr (i32.sub (call $dict-ptr) (i32.const 8)))
+
+                ;; append_to_dict(CW_RUN);
+                (call $append-to-dict (i32.const 2))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_define
+                ;; def_word(CW_COMPILE);
+                (call $def-word (i32.const 1))
+
+                ;; append_to_dict(CW_RUN);
+                (call $append-to-dict (i32.const 2))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_run
+                ;; m[1] += 1;
+
+                (call $set-ret-stack-idx (i32.add (call $ret-stack-idx)
+                                          (i32.const 4)))
+
+                ;; m[m[1]] = program_counter;
+                ;; program_counter = next_word;
+
+                ;; break
+                (br $break))
+
+            ;; $cw_compile
+                ;; append_to_dict(next_word);
+                (call $append-to-dict (get_local $next-word))
+
+                ;; break
+                (br $break))
+
+            ;; $cw_pushint
+                ;; stack_ptr += 1;
+                (call $set-stack-ptr (i32.add (call $stack-ptr) (i32.const 4)))
+
+                ;; *stack_ptr = top_of_stack;
+                (i32.store (call $stack-ptr) (call $top-of-stack))
+
+                ;; top_of_stack = m[program_counter];
+                (call $set-top-of-stack (i32.load (call $program-counter)))
+
+                ;; program_counter += 1;
+                (call $set-program-counter (i32.add (call $program-counter)
+                                            (i32.const 1)))
+
+                ;; break
+                (br $break)))
 
     (func $main
         ;; int i, tmp1, word_to_execute;
