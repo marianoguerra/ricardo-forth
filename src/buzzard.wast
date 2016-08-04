@@ -372,7 +372,8 @@
                 ;; } else {
                     (block
                 ;;     append_to_dict(ADDR_OF_PUSHINT);
-                        (call $append-to-dict (i32.const 2))
+                        (call $append-to-dict (i32.const 8))
+
                 ;;     val = atoi(str_mem);
                         (set_local $val (call_import $atoi (i32.const 20000)))
                 ;;     append_to_dict(val);
@@ -435,7 +436,7 @@
 
                 ;; program_counter += 1;
                 (call $set-program-counter (i32.add (call $program-counter)
-                                            (i32.const 1)))
+                                            (i32.const 4)))
 
                 ;; break
                 (br $break)))
@@ -451,7 +452,7 @@
         (call $set-dict-ptr (i32.const 544))
         (call $set-last-str-entry (i32.const 20064))
         (call $set-stack-ptr (i32.const 25000))
-        (call $set-last-dict-entry (i32.const 4))
+        (call $set-last-dict-entry (i32.const 8))
 
         ;; def_word(CW_DEFINE);
         (call $def-word (i32.const 3))
@@ -481,7 +482,7 @@
         ;; appends 42
         ;; append_to_dict(program_counter - 1);
         (call $append-to-dict (i32.sub (call $program-counter)
-                               (i32.const 1)))
+                               (i32.const 4)))
 
         ;; for (i = 6; i < 16; i += 1) {
         (set_local $i (i32.const 6))
@@ -514,7 +515,7 @@
 
             ;; program_counter += 1;
             (call $set-program-counter (i32.add (call $program-counter)
-                                        (i32.const 1)))
+                                        (i32.const 4)))
 
             ;; r(word_to_execute);
             (call $r (get_local $word-to-execute))
