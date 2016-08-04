@@ -146,9 +146,6 @@
         ;; codeword = m[word_addr];
         (set_local $codeword (i32.load (get_local $word-addr)))
 
-        (call_import $debug (i32.const 0) (get_local $word-addr))
-        (call_import $debug (i32.const 1) (get_local $codeword))
-
         ;; label to implement break out of cases
         (block $break
         ;; case 0
@@ -209,8 +206,10 @@
             (get_local $codeword)))
 
             ;; $cw_not_found
-                ;; ERROR 1 0: codeword not found
-                (call_import $signal-error (i32.const 1) (i32.const 0))
+                ;; ERROR 1 CODEWORD: codeword not found
+                (call_import $debug (i32.const 1) (get_local $word-addr))
+                (call_import $debug (i32.const 1) (get_local $codeword))
+                (call_import $signal-error (i32.const 1) (get_local $codeword))
 
                 ;; break
                 (br $break))
