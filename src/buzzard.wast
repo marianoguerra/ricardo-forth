@@ -124,8 +124,9 @@
             (call_import $read-word-into (call $last-str-entry)))
 
         ;; last_str_entry += strlen(str_mem + last_str_entry) + 1;
-        (call $set-last-str-entry (i32.add (get_local $read-len)
-                                   (i32.const 1))))
+        (call $set-last-str-entry (i32.add (call $last-str-entry)
+                                   (i32.add (get_local $read-len)
+                                    (i32.const 1)))))
 
     (func $r (param $word-addr i32)
         ;; int read_count, val, entry_addr, entry_data_addr, codeword;
