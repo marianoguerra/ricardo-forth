@@ -33,7 +33,7 @@ int  m[20000] = { 32 },
      last_dict_entry = 1,
      program_counter,
      stack[500],
-     *stack_ptr = stack,
+     stack_ptr = 0,
      // strings start at index 64 since first 64 bytes are used to read user
      // input
      last_str_entry = 64,
@@ -126,30 +126,30 @@ void r(int word_addr)
             m[1] -= 1;
             break;
         case CW__PICK: // _pick
-            top_of_stack = stack_ptr[-top_of_stack];
+            top_of_stack = stack[stack_ptr - top_of_stack];
             break;
         case CW_COMPILE: // compile code
             // a pointer to the next word is appended to the dictionary
             append_to_dict(next_word);
             break;
         case CW_MUL: // *
-            top_of_stack *= *stack_ptr;
+            top_of_stack *= stack[stack_ptr];
             stack_ptr -= 1;
             break;
         case CW_STORE: // !
-            m[top_of_stack] = *stack_ptr;
+            m[top_of_stack] = stack[stack_ptr];
             stack_ptr -= 1;
-            top_of_stack = *stack_ptr;
+            top_of_stack = stack[stack_ptr];
             stack_ptr -= 1;
             break;
         case CW_PUSHINT: // pushint
             stack_ptr += 1;
-            *stack_ptr = top_of_stack;
+            stack[stack_ptr] = top_of_stack;
             top_of_stack = m[program_counter];
             program_counter += 1;
             break;
         case CW_SUB: // -
-            top_of_stack = *stack_ptr - top_of_stack;
+            top_of_stack = stack[stack_ptr] - top_of_stack;
             stack_ptr -= 1;
             break;
         case CW_RUN: // run code
@@ -170,7 +170,7 @@ void r(int word_addr)
             top_of_stack = m[top_of_stack];
             break;
         case CW_DIV: // /
-            top_of_stack = *stack_ptr / top_of_stack;
+            top_of_stack = stack[stack_ptr] / top_of_stack;
             stack_ptr -= 1;
             break;
         case CW_DEFINE: // :
