@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Web Assembly</title>
+  <title>Ricardo Forth - Web Assembly Edition </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width" />
   <link rel="shortcut icon" href="/favicon.ico">
@@ -10,24 +10,64 @@
     html, body{
       margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
     }
+    body{
+     color: #333;
+     background-color: #fefefe;
+     font-family: helvetica;
+     margin: 2em 10%;
+     width: 80%;
+    }
+    textarea{
+     width: 100%;
+     height: 8em;
+     margin-bottom: 1em;
+     border: 1px solid #ddd;
+     padding: 1e;
+    }
+    p{
+     width: 80em;
+     text-align: justify;
+    }
     html {
       user-select: none;
     }
   </style>
 </head>
 <body>
+    <h1>Ricardo Forth - Web Assembly Edition</h1>
+
+    <p>
+     Demo page for a forth interpreter cross compiled from C using binaryen.
+
+     Read the README in the github repository for more details.
+
+     <a href="https://github.com/marianoguerra/ricardo-forth/">github.com/marianoguerra/ricardo-forth/</a>
+
+    </p>
+
+    <p>
+    To run first append some input by writing in the input text area and clicking
+    append input, successive clicks will append to the input buffer that simulates
+    stdin, then click run.
+    </p>
+
+    <p>
+    Once it runs to completion the binary calls exit(0), normally you would run
+    it again, here you have to reload the page :)
+    </p>
+
     <h2>Input</h2>
-    <textarea id="buzzard-stdin" style="width: 100%; height: 8em;padding-bottom: 1em;"></textarea>
+    <textarea id="buzzard-stdin"></textarea>
 
     <center>
-     <button id="buzzard-append-input" style="margin-top: 1em">Append Input</button>
+     <button id="buzzard-append-input">Append Input</button>
     </center>
-    
+
     <h2>Output</h2>
     <textarea id="output" rows="8"></textarea>
 
     <center>
-     <button id="buzzard-run" style="margin-top: 1em">Run</button>
+     <button id="buzzard-run">Run</button>
     </center>
 
   <script>
