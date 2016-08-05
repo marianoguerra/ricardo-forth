@@ -1,3 +1,4 @@
+BINARYEN_PATH ?= $(HOME)/soft/binaryen/
 
 first:
 	gcc src/buzzard.c -o bin/first
@@ -8,6 +9,9 @@ first.wasm:
 first-emcc:
 	emcc --pre-js src/buzzard-emcc.pre.js --separate-asm src/buzzard.c -o bin/buzzard-emcc.html
 	@cp src/buzzard-emcc.html bin/
+
+first-binaryen:
+	emcc src/buzzard.c -o bin/buzzard-binaryen.js -s 'BINARYEN="$(BINARYEN_PATH)"'
 
 first-demo:
 	cat ./examples/demo1.1st | ./bin/first
