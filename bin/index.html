@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Ricardo Forth - Javascript Edition </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <link rel="shortcut icon" href="/favicon.ico">
+  <script src="../src/buzzard.js"></script>
+  <script src="../src/clib.js"></script>
+  <style>
+    html, body{
+      margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    }
+    body{
+     color: #333;
+     background-color: #fefefe;
+     font-family: helvetica;
+     margin: 2em 10%;
+     width: 80%;
+    }
+    textarea{
+     width: 100%;
+     height: 8em;
+     margin-bottom: 1em;
+     border: 1px solid #ddd;
+     padding: 1e;
+    }
+    p{
+     width: 80em;
+     text-align: justify;
+    }
+    html {
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+    <h1>Ricardo Forth - Javascript Edition</h1>
+
+    <p>
+     Demo page for a forth interpreter cross compiled from C using binaryen.
+
+     Read the README in the github repository for more details.
+
+     <a href="https://github.com/marianoguerra/ricardo-forth/">github.com/marianoguerra/ricardo-forth/</a>
+
+    </p>
+
+    <p>
+    To run first append some input by writing in the input text area and clicking
+    append input, successive clicks will append to the input buffer that simulates
+    stdin, then click run.
+    </p>
+
+    <p>
+    Once it runs to completion the binary calls exit(0), normally you would run
+    it again, here you have to reload the page :)
+    </p>
+
+    <h2>Input</h2>
+    <center style="margin-bottom: 1em;">
+     <button onClick="loadAndSet('../examples/demo1.1st', 'buzzard-stdin')">Load demo1.1st</button>
+     <button onClick="loadAndSet('../examples/third', 'buzzard-stdin')">Load third</button>
+     <button onClick="loadAndSet('../examples/demo1.th', 'buzzard-stdin')">Load demo1.th</button>
+     <button onClick="loadAndSet('../examples/demo2.th', 'buzzard-stdin')">Load demo2.th</button>
+     <button onClick="loadAndSet('../examples/demo3.th', 'buzzard-stdin')">Load demo3.th</button>
+     <button onClick="loadAndSet('../examples/demo4.th', 'buzzard-stdin')">Load demo4.th</button>
+     <button onClick="loadAndSet('../examples/demo5.th', 'buzzard-stdin')">Load demo5.th</button>
+    </center>
+    <textarea id="buzzard-stdin"></textarea>
+
+    <center>
+     <button id="buzzard-append-input">Append Input</button>
+    </center>
+
+    <h2>Output</h2>
+    <textarea id="output" rows="8"></textarea>
+
+    <center>
+     <button id="buzzard-run">Run</button>
+    </center>
+
+  <script>
+var buzzardStdin = document.getElementById('buzzard-stdin');
+var buzzardStdout = document.getElementById('output');
+var buzzardAppendInput= document.getElementById('buzzard-append-input');
+var buzzardRun = document.getElementById('buzzard-run');
+var run = true;
+
+function newBuzzard() {
+    var clib = __clib(function (c) {
+        clib.output += c;
+        console.log("stdout:", c);
+        buzzardStdout.value += c;
+    });
+
+    clib.output = "";
+
+    return __buzzard(window, clib);
+}
+
+var vm = newBuzzard();
+
+function loadAndSet(path, id) {
+    window.fetch(path)
+    .then(function (response) {
+        if (response.ok) {
+            response.text().then(function (text) {
+                document.getElementById(id).value = text;
+            });
+        }
+    });
+}
+
+function stderr(text) {
+    console.error("stderr:", text);
+}
+
+function runVm() {
+    try {
+        vm.main()
+    } catch (error) {
+        if (!(error instanceof Error && error.message === "EOF")) {
+            stderr("error:", error.message, error);
+        };
+    }
+}
+
+buzzardRun.addEventListener('click', function () {
+    if (run) {
+        console.log("Run!");
+        runVm();
+        buzzardRun.innerHTML = "Reload the page to run again";
+        run = false;
+    } else {
+        buzzardStdout.value = "";
+        location.reload();
+    }
+});
+
+buzzardAppendInput.addEventListener('click', function () {
+    var text = buzzardStdin.value;
+    console.log("Append Input!");
+    vm.lib.appendInput(text);
+    buzzardStdin.value = "";
+});
+  </script>
+</body>
+</html>
