@@ -1,2 +1,3 @@
 bin/first
 bin/first.wasm
+bin/buzzard-emcc.*

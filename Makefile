@@ -5,6 +5,10 @@ first:
 first.wasm:
 	wasm-as src/buzzard.wast -o bin/first.wasm
 
+first-emcc:
+	emcc --pre-js src/buzzard-emcc.pre.js --separate-asm src/buzzard.c -o bin/buzzard-emcc.html
+	@cp src/buzzard-emcc.html bin/
+
 first-demo:
 	cat ./examples/demo1.1st | ./bin/first
 
