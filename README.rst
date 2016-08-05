@@ -3,7 +3,7 @@ Ricardo Forth
 
 A Forth dialect implemented in C, Javascript, asm.js and WebAssembly.
 
-This project is based on the 1992 IOCCC entry `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>`_ (design notes: `buzzard.2.design <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design>`_),
+This project is based on the 1992 `IOCCC <http://ioccc.org/>`_ entry `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>`_ (design notes: `buzzard.2.design <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design>`_),
 prettified (see initial commits on this repo) and then compiled to:
 
 * `asmjs <http://asmjs.org/spec/latest/>`_ using `emscripten <http://kripken.github.io/emscripten-site/>`_
@@ -44,6 +44,13 @@ Pre setup (I assume ubuntu or debian derivative)::
     # this should go in a more permanent place like .bashrc or equivalent
 
     export PATH=$PATH:$PWD/llvm/bin/:$PWD/emsdk/:$PWD/binaryen/bin/
+
+    # Run the command so it generates basic configuration
+    em++
+
+Now edit emscripten configuration file::
+
+    edit $HOME/.emscripten
 
 Try one example
 ---------------
