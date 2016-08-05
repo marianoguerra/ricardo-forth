@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Web Assembly</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <link rel="shortcut icon" href="/favicon.ico">
+  <script src="buzzard-binaryen.js" defer></script>
+  <style>
+    html, body{
+      margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    }
+    html {
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+    <h2>Input</h2>
+    <textarea id="buzzard-stdin" style="width: 100%; height: 8em;padding-bottom: 1em;"></textarea>
+
+    <center>
+     <button id="buzzard-append-input" style="margin-top: 1em">Append Input</button>
+    </center>
+    
+    <h2>Output</h2>
+    <textarea id="output" rows="8"></textarea>
+
+    <center>
+     <button id="buzzard-run" style="margin-top: 1em">Run</button>
+    </center>
+
+  <script>
+   var buzzardStdin = document.getElementById('buzzard-stdin');
+   var buzzardAppendInput= document.getElementById('buzzard-append-input');
+   var buzzardRun = document.getElementById('buzzard-run');
+
+      buzzardRun.addEventListener('click', function () {
+       console.log("Run!");
+       Module['callMain']([])
+      });
+
+      buzzardAppendInput.addEventListener('click', function () {
+       var text = buzzardStdin.value;
+       console.log("Append Input!");
+       Module._buzzardAppendInput(text);
+       buzzardStdin.value = "";
+      });
+
+    function stdout(text) {
+      console.log("stdout:", text);
+    }
+
+    function stderr(text) {
+      console.error("stderr:", text);
+    }
+
+    function status(text) {
+      console.info("status:", text);
+    }
+
+    function stdin() {
+     var toRead = Module['_buzzardInput'],
+     readIndex = Module['_buzzardInputIndex'];
+
+     if (readIndex >= toRead.length) {
+      return null;
+     } else {
+      var c = toRead.charCodeAt(readIndex);
+      Module['_buzzardInputIndex'] += 1;
+      return c;
+     }
+    }
+
+    function initialize(wasmBinary) {
+     Module = main({
+      print: stdout,
+      printErr: stderr,
+      setStatus: status,
+      wasmBinary: wasmBinary,
+      noInitialRun: true,
+      '_buzzardInput': '',
+      '_buzzardInputIndex': 0,
+      '_buzzardAppendInput': function (text) {
+       Module['_buzzardInput'] += text;
+      },
+      stdin: stdin,
+      preInit: function () {
+       console.log("Pre Init");
+      }
+     });
+
+     wasmBinary = null;
+
+    }
+
+    window.fetch("buzzard-binaryen.wasm")
+     .then(function(response) {
+      return response.arrayBuffer();
+     })
+    .then(function(buffer) {
+     initialize(buffer);
+    });
+  </script>
+</body>
+</html>
