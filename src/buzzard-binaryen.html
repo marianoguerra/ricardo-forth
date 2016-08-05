@@ -57,6 +57,15 @@
     </p>
 
     <h2>Input</h2>
+    <center style="margin-bottom: 1em;">
+     <button onClick="loadAndSet('../examples/demo1.1st', 'buzzard-stdin')">Load demo1.1st</button>
+     <button onClick="loadAndSet('../examples/third', 'buzzard-stdin')">Load third</button>
+     <button onClick="loadAndSet('../examples/demo1.th', 'buzzard-stdin')">Load demo1.th</button>
+     <button onClick="loadAndSet('../examples/demo2.th', 'buzzard-stdin')">Load demo2.th</button>
+     <button onClick="loadAndSet('../examples/demo3.th', 'buzzard-stdin')">Load demo3.th</button>
+     <button onClick="loadAndSet('../examples/demo4.th', 'buzzard-stdin')">Load demo4.th</button>
+     <button onClick="loadAndSet('../examples/demo5.th', 'buzzard-stdin')">Load demo5.th</button>
+    </center>
     <textarea id="buzzard-stdin"></textarea>
 
     <center>
@@ -75,11 +84,29 @@
    var buzzardStdout = document.getElementById('output');
    var buzzardAppendInput= document.getElementById('buzzard-append-input');
    var buzzardRun = document.getElementById('buzzard-run');
+   var run = true;
+
+      function loadAndSet(path, id) {
+       window.fetch(path)
+        .then(function (response) {
+         if (response.ok) {
+          response.text().then(function (text) {
+           document.getElementById(id).value = text;
+          });
+         }
+        });
+      }
 
       buzzardRun.addEventListener('click', function () {
-       console.log("Run!");
-       Module['callMain']([])
-       buzzardRun.innerHTML = "Reload the page to run again";
+       if (run) {
+        console.log("Run!");
+        Module['callMain']([])
+        buzzardRun.innerHTML = "Reload the page to run again";
+        run = false;
+       } else {
+        buzzardStdout.value = "";
+        location.reload();
+       }
       });
 
       buzzardAppendInput.addEventListener('click', function () {
