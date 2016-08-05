@@ -1,5 +1,7 @@
 BINARYEN_PATH ?= $(HOME)/soft/binaryen/
 
+all: first first.wasm first-emcc first-binaryen
+
 first:
 	gcc src/buzzard.c -o bin/first
 
