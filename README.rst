@@ -16,7 +16,7 @@ Pre setup (I assume ubuntu or debian derivative)::
 
     sudo apt-get update
 
-    sudo apt-get install build-essential cmake nodejs default-jre
+    sudo apt-get -y install build-essential cmake nodejs default-jre
 
 ::
 
