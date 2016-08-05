@@ -179,12 +179,12 @@ void r(int word_addr)
             break;
         case CW_ECHO: // echo
             putchar(top_of_stack);
-            top_of_stack = *stack_ptr;
+            top_of_stack = stack[stack_ptr];
             stack_ptr -= 1;
             break;
         case CW_KEY: // key
             stack_ptr += 1;
-            *stack_ptr = top_of_stack;
+            stack[stack_ptr] = top_of_stack;
             top_of_stack = getchar();
     }
 }
