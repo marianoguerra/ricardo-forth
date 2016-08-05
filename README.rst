@@ -3,11 +3,11 @@ Ricardo Forth
 
 A Forth dialect implemented in C, Javascript, asm.js and WebAssembly.
 
-This project is based on the 1992 IOCCC entry `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>` (design notes: `buzzard.2.design <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design>`_),
+This project is based on the 1992 IOCCC entry `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>`_ (design notes: `buzzard.2.design <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design>`_),
 prettified (see initial commits on this repo) and then compiled to:
 
- * `asmjs <http://asmjs.org/spec/latest/>`_ using `emscripten <http://kripken.github.io/emscripten-site/>`_
- * `WebAssembly <https://webassembly.github.io/>`_ using `Binaryen <https://github.com/WebAssembly/binaryen/>`_
+* `asmjs <http://asmjs.org/spec/latest/>`_ using `emscripten <http://kripken.github.io/emscripten-site/>`_
+* `WebAssembly <https://webassembly.github.io/>`_ using `Binaryen <https://github.com/WebAssembly/binaryen/>`_
 
 Setup Dev Environment
 ---------------------
@@ -20,22 +20,22 @@ Pre setup (I assume ubuntu or debian derivative)::
 
 ::
 
-	git clone -b incoming --depth 1 https://github.com/kripken/emscripten-fastcomp llvm
-	git clone -b incoming --depth 1 https://github.com/kripken/emscripten-fastcomp-clang llvm/tools/clang
+    git clone -b incoming --depth 1 https://github.com/kripken/emscripten-fastcomp llvm
+    git clone -b incoming --depth 1 https://github.com/kripken/emscripten-fastcomp-clang llvm/tools/clang
     git clone -b incoming --depth 1 https://github.com/kripken/emscripten emsdk
     git clone --depth 1 https://github.com/WebAssembly/binaryen binaryen
 
-	mkdir llvm/build
+    mkdir llvm/build
     mkdir binaryen/build
 
-	cd llvm/build
+    cd llvm/build
 
-	cmake .. -DCMAKE_INSTALL_PREFIX=.. \
-	  -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="X86;JSBackend" \
-	  -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="WebAssembly" -DLLVM_INCLUDE_EXAMPLES=OFF \
-	  -DLLVM_INCLUDE_TESTS=OFF -DCLANG_INCLUDE_EXAMPLES=OFF -DCLANG_INCLUDE_TESTS=OFF
+    cmake .. -DCMAKE_INSTALL_PREFIX=.. \
+      -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD="X86;JSBackend" \
+      -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="WebAssembly" -DLLVM_INCLUDE_EXAMPLES=OFF \
+      -DLLVM_INCLUDE_TESTS=OFF -DCLANG_INCLUDE_EXAMPLES=OFF -DCLANG_INCLUDE_TESTS=OFF
 
-	cmake --build . --target install --config Release
+    cmake --build . --target install --config Release
 
     cd ../../
     cmake .. -DCMAKE_INSTALL_PREFIX=.. -DBUILD_STATIC_LIB=ON
