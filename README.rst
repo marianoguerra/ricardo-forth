@@ -12,7 +12,7 @@ prettified (see initial commits on this repo) and then compiled to:
 Setup Dev Environment
 ---------------------
 
-Pre setup (I assume ubuntu or debian derivative)::
+Pre setup (I assume ubuntu or debian derivative, `see here for instructions to build on windows <https://github.com/qis/wasm>`_)::
 
     sudo apt-get update
 
