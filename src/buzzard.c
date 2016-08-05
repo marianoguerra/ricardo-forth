@@ -189,7 +189,7 @@ void r(int word_addr)
     }
 }
 
-void main()
+int main()
 {
     int i, tmp1, word_to_execute;
     // : (codeword 3) 0, 1 and 2 are internal words with no names
@@ -242,4 +242,6 @@ void main()
         program_counter += 1;
         r(word_to_execute);
     }
+
+    return 0;
 }
