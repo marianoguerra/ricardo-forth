@@ -72,6 +72,7 @@
 
   <script>
    var buzzardStdin = document.getElementById('buzzard-stdin');
+   var buzzardStdout = document.getElementById('output');
    var buzzardAppendInput= document.getElementById('buzzard-append-input');
    var buzzardRun = document.getElementById('buzzard-run');
 
@@ -89,6 +90,7 @@
 
     function stdout(text) {
       console.log("stdout:", text);
+      buzzardStdout.value += text;
     }
 
     function stderr(text) {
