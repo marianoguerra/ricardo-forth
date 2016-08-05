@@ -37,12 +37,12 @@ Pre setup (I assume ubuntu or debian derivative)::
 
     cmake --build . --target install --config Release
 
-    cd ../../
+    cd ../../binaryen/build
     cmake .. -DCMAKE_INSTALL_PREFIX=.. -DBUILD_STATIC_LIB=ON
     cmake --build . --target install --config Release
 
+    cd ../../
     # this should go in a more permanent place like .bashrc or equivalent
-
     export PATH=$PATH:$PWD/llvm/bin/:$PWD/emsdk/:$PWD/binaryen/bin/
 
     # Run the command so it generates basic configuration
