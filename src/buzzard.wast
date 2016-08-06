@@ -502,7 +502,8 @@
         ;; }
 
         ;; m[1] = m[0];
-        (call $set-ret-stack-idx (call $dict-ptr))
+        ;; ret stack here is set before dict so we set it directly
+        (call $set-ret-stack-idx (i32.const 128))
 
         ;; NOTE: we don't do the return stack jump in the next line since
         ;; we have the return stack before the beginning of the dictionary
