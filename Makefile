@@ -48,3 +48,8 @@ third:
 index:
 	rst2html5 --embed-content --stylesheet-path resources/style.css resources/index.rst index.html
 
+hello-emcc:
+	emcc --separate-asm resources/hello.c -o resources/hello-emcc.html
+
+hello-binaryen:
+	emcc -Os -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" -s "EXPORT_NAME='main'" resources/hello.c -o resources/hello-binaryen.html
