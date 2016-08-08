@@ -13,7 +13,7 @@ first-emcc:
 	@cp src/buzzard-emcc.html bin/
 
 first-binaryen:
-	emcc -Os -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" --memory-init-file 1 -s ELIMINATE_DUPLICATE_FUNCTIONS=1 -s MODULARIZE=1 -s NO_EXIT_RUNTIME=1 -s "EXPORT_NAME='main'" src/buzzard.c -o bin/buzzard-binaryen.js
+	emcc -Os -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" -s MODULARIZE=1 -s "EXPORT_NAME='main'" src/buzzard.c -o bin/buzzard-binaryen.js
 	@cp src/buzzard-binaryen.html bin/
 
 first-demo:
