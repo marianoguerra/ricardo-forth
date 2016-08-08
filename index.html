@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title></title><style type="text/css">body{
+ background-color: #fefefe;
+ color: #333;
+ margin: 3em 10%;
+ width: 80%;
+ font-family: helvetica;
+ font-size: 16pt;
+}
+
+p{
+ max-width: 100em;
+}
+</style></head><body><h1>Ricardo Forth</h1><p>A Forth dialect implemented in C, Javascript, WebAssembly and compiled from C
+to asm.js and WebAssembly.</p><p>This project is based on the 1992 <a class="reference external" href="http://ioccc.org/">IOCCC</a> entry <a class="reference external" href="http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c">buzzard.2</a> (design notes: <a class="reference external" href="http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design">buzzard.2.design</a>),
+prettified and then compiled to:</p><ul><li><p><a class="reference external" href="http://asmjs.org/spec/latest/">asmjs</a> using <a class="reference external" href="http://kripken.github.io/emscripten-site/">emscripten</a></p></li><li><p><a class="reference external" href="https://webassembly.github.io/">WebAssembly</a> using <a class="reference external" href="https://github.com/WebAssembly/binaryen/">Binaryen</a></p></li></ul><p>Also reimplemented by translating the C code into Javascript and WebAssebly.</p><p>For instructions to setup the dev environment yourself check the <a class="reference external" href="https://github.com/marianoguerra/ricardo-forth">README</a>.</p><section id="try-it"><header><h2>Try it!</h2></header><ul><li><p><a class="reference external" href="/bin/first.wasm.html">Handwritten WebAssembly using the WebAssembly text format and wasm-as</a></p></li><li><p><a class="reference external" href="/bin/first.js.html">Handwritten Javascript</a></p></li><li><p><a class="reference external" href="/bin/buzzard-binaryen.html">C compiled to WebAssembly using Binaryen</a></p></li><li><p><a class="reference external" href="/bin/buzzard-emcc.html">C compiled to asm.js using emscripten</a></p></li></ul></section><section id="read-the-code"><header><h2>Read the Code</h2></header><ul><li><p><a class="reference external" href="https://github.com/marianoguerra/ricardo-forth">Project on github</a></p></li><li><p><a class="reference external" href="https://github.com/marianoguerra/ricardo-forth/blob/master/src/first.wast">WebAssembly version</a></p></li><li><p><a class="reference external" href="https://github.com/marianoguerra/ricardo-forth/blob/master/src/buzzard.js">Javascript version</a></p></li><li><p><a class="reference external" href="https://github.com/marianoguerra/ricardo-forth/blob/master/src/buzzard.c">C version prettified</a></p></li><li><p><a class="reference external" href="http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c">C version (IOCC entry)</a></p></li></ul><p>To read the process of prettifying the C code follow the <a class="reference external" href="https://github.com/marianoguerra/ricardo-forth/commits/master/src/buzzard.c">buzzard.c commits</a> in chronological order.</p></section></body></html>
