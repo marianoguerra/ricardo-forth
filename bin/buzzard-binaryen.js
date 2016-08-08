@@ -1302,10 +1302,10 @@ Module["preloadedAudios"] = {};
 var memoryInitializer = null;
 var ASM_CONSTS = [];
 STATIC_BASE = 1024;
-STATICTOP = STATIC_BASE + 91408;
+STATICTOP = STATIC_BASE + 91424;
 __ATINIT__.push();
 memoryInitializer = "buzzard-binaryen.js.mem";
-var STATIC_BUMP = 91408;
+var STATIC_BUMP = 91424;
 var tempDoublePtr = STATICTOP;
 STATICTOP += 16;
 Module["_i64Subtract"] = _i64Subtract;
@@ -1329,11 +1329,8 @@ function _abort() {
 }
 Module["___muldsi3"] = ___muldsi3;
 Module["___muldi3"] = ___muldi3;
-function _emscripten_memcpy_big(dest, src, num) {
- HEAPU8.set(HEAPU8.subarray(src, src + num), dest);
- return dest;
-}
-Module["_memcpy"] = _memcpy;
+function ___lock() {}
+function ___unlock() {}
 var ERRNO_CODES = {
  EPERM: 1,
  ENOENT: 2,
@@ -4773,6 +4770,11 @@ function _sbrk(bytes) {
  return ret;
 }
 Module["___uremdi3"] = ___uremdi3;
+function _emscripten_memcpy_big(dest, src, num) {
+ HEAPU8.set(HEAPU8.subarray(src, src + num), dest);
+ return dest;
+}
+Module["_memcpy"] = _memcpy;
 function __exit(status) {
  Module["exit"](status);
 }
@@ -4933,15 +4935,17 @@ Module.asmLibraryArg = {
  "invoke_vi": invoke_vi,
  "_pthread_cleanup_pop": _pthread_cleanup_pop,
  "_abort": _abort,
+ "___lock": ___lock,
  "___syscall6": ___syscall6,
  "___setErrNo": ___setErrNo,
  "_llvm_cttz_i32": _llvm_cttz_i32,
  "_sbrk": _sbrk,
+ "___syscall140": ___syscall140,
  "_llvm_fabs_f64": _llvm_fabs_f64,
  "_pthread_cleanup_push": _pthread_cleanup_push,
  "_emscripten_memcpy_big": _emscripten_memcpy_big,
  "___syscall54": ___syscall54,
- "___syscall140": ___syscall140,
+ "___unlock": ___unlock,
  "_exit": _exit,
  "__exit": __exit,
  "___syscall145": ___syscall145,
@@ -4970,6 +4974,7 @@ var _malloc = Module["_malloc"] = asm["_malloc"];
 var _memcpy = Module["_memcpy"] = asm["_memcpy"];
 var ___muldi3 = Module["___muldi3"] = asm["___muldi3"];
 var _bitshift64Lshr = Module["_bitshift64Lshr"] = asm["_bitshift64Lshr"];
+var _fflush = Module["_fflush"] = asm["_fflush"];
 var ___uremdi3 = Module["___uremdi3"] = asm["___uremdi3"];
 var ___errno_location = Module["___errno_location"] = asm["___errno_location"];
 var _bitshift64Shl = Module["_bitshift64Shl"] = asm["_bitshift64Shl"];
@@ -5154,7 +5159,6 @@ var shouldRunNow = true;
 if (Module["noInitialRun"]) {
  shouldRunNow = false;
 }
-Module["noExitRuntime"] = true;
 run();
 
 
