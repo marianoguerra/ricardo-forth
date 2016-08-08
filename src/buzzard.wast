@@ -355,11 +355,14 @@
                     ;; entry_addr = m[entry_addr];
                     (set_local $entry-addr (i32.load (get_local $entry-addr)))
 
+                    (br_if $exit-while (i32.eq (i32.const 8)
+                                        (get_local $entry-addr)))
+
                     (br $next-while))
                 ;; }
 
                 ;; if (entry_addr != 1) {
-                (if (i32.ne (get_local $entry-addr) (i32.const 4))
+                (if (i32.ne (get_local $entry-addr) (i32.const 8))
                     (block
                 ;;     entry_data_addr = entry_addr + 2;
                         (set_local $entry-data-addr
