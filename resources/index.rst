@@ -17,10 +17,10 @@ For instructions to setup the dev environment yourself check the `README <https:
 Try it!
 -------
 
-* `Handwritten WebAssembly using the WebAssembly text format and wasm-as </bin/first.wasm.html>`_
-* `Handwritten Javascript </bin/first.js.html>`_
-* `C compiled to WebAssembly using Binaryen </bin/buzzard-binaryen.html>`_
-* `C compiled to asm.js using emscripten </bin/buzzard-emcc.html>`_
+* `Handwritten WebAssembly using the WebAssembly text format and wasm-as <bin/first.wasm.html>`_
+* `Handwritten Javascript <bin/first.js.html>`_
+* `C compiled to WebAssembly using Binaryen <bin/buzzard-binaryen.html>`_
+* `C compiled to asm.js using emscripten <bin/buzzard-emcc.html>`_
 
 Read the Code
 -------------
