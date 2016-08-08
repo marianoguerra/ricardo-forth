@@ -22,6 +22,18 @@ Try it!
 * `C compiled to WebAssembly using Binaryen <bin/buzzard-binaryen.html>`_
 * `C compiled to asm.js using emscripten <bin/buzzard-emcc.html>`_
 
+Simpler Examples
+----------------
+
+Here we compile a simple C program to asmjs and WebAssembly to make it easier
+to follow the generated code for a minimal example that does function calls,
+local variables and I/O:
+
+* `hello.c file <https://github.com/marianoguerra/ricardo-forth/blob/master/resources/hello.c>`_
+* `hello-binaryen <resources/hello-binaryen.html>`_: hello.c compiled to WebAssembly using binaryen
+* `hello-emcc <resources/hello-emcc.html>`_: hello.c compiled to asmjs using emscripten
+* `the resources folder <https://github.com/marianoguerra/ricardo-forth/tree/master/resources>`_ has all the generated files if you want to read them
+
 Read the Code
 -------------
 
