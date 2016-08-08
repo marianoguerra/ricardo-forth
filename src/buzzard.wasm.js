@@ -99,11 +99,11 @@
         }
 
         function lastStrEntry() {
-            return lib.loadI32(24);
+            return lib.loadI32(88);
         }
 
         function lastDictEntry() {
-            return lib.loadI32(12);
+            return lib.loadI32(76);
         }
 
         function dumpRegisters() {
@@ -111,11 +111,13 @@
                 "dictPtr": lib.loadI32(0),
                 "retStackIdx": lib.loadI32(4),
                 "ignore": lib.loadI32(8),
+                "_x": lib.loadI32(12),
+                "_y": lib.loadI32(16),
                 "lastDictEntry": lastDictEntry(),
                 "programCounter": lib.loadI32(16),
-                "stackPtr": lib.loadI32(20),
+                "stackPtr": lib.loadI32(84),
                 "lastStrEntry": lastStrEntry(),
-                "topOfStack": lib.loadI32(28)
+                "topOfStack": lib.loadI32(92)
             };
         }
 

@@ -28,11 +28,13 @@
     ;; m[0]:	i32 dictionary pointer
     ;; m[4]:	i32 return stack index
     ;; m[8]:	i32 always 0 (fake pushing instruction)
-    ;; m[12]:	i32 last_dict_entry
-    ;; m[16]:	i32 program_counter
-    ;; m[20]:	i32 stack_ptr
-    ;; m[24]:	i32 last_str_entry
-    ;; m[28]:	i32 top_of_stack
+    ;; m[12]:   i32 temp addr 1 (_x in third)
+    ;; m[16]:   i32 temp addr 2 (_y in third)
+    ;; m[76]:	i32 last_dict_entry
+    ;; m[80]:	i32 program_counter
+    ;; m[84]:	i32 stack_ptr
+    ;; m[88]:	i32 last_str_entry
+    ;; m[92]:	i32 top_of_stack
 
     (func $dict-ptr (result i32)
       (i32.load (i32.const 0)))
@@ -49,38 +51,38 @@
 
 
     (func $last-dict-entry (result i32)
-      (i32.load (i32.const 12)))
+      (i32.load (i32.const 76)))
 
     (func $set-last-dict-entry (param $val i32)
-      (i32.store (i32.const 12) (get_local $val)))
+      (i32.store (i32.const 76) (get_local $val)))
 
 
     (func $program-counter (result i32)
-      (i32.load (i32.const 16)))
+      (i32.load (i32.const 80)))
 
     (func $set-program-counter (param $val i32)
-      (i32.store (i32.const 16) (get_local $val)))
+      (i32.store (i32.const 80) (get_local $val)))
 
 
     (func $stack-ptr (result i32)
-      (i32.load (i32.const 20)))
+      (i32.load (i32.const 84)))
 
     (func $set-stack-ptr (param $val i32)
-      (i32.store (i32.const 20) (get_local $val)))
+      (i32.store (i32.const 84) (get_local $val)))
 
 
     (func $last-str-entry (result i32)
-      (i32.load (i32.const 24)))
+      (i32.load (i32.const 88)))
 
     (func $set-last-str-entry (param $val i32)
-      (i32.store (i32.const 24) (get_local $val)))
+      (i32.store (i32.const 88) (get_local $val)))
 
 
     (func $top-of-stack (result i32)
-      (i32.load (i32.const 28)))
+      (i32.load (i32.const 92)))
 
     (func $set-top-of-stack (param $val i32)
-      (i32.store (i32.const 28) (get_local $val)))
+      (i32.store (i32.const 92) (get_local $val)))
 
 
     ;; End registers section
@@ -303,7 +305,8 @@
             ;; $cw_store
                 ;; m[top_of_stack] = *stack_ptr;
 
-                (i32.store (call $top-of-stack) (i32.load (call $stack-ptr)))
+                (i32.store (i32.mul (call $top-of-stack) (i32.const 4))
+                           (i32.load (call $stack-ptr)))
 
                 ;; stack_ptr -= 1;
                 (call $set-stack-ptr (i32.sub (call $stack-ptr) (i32.const 4)))
@@ -319,7 +322,7 @@
 
             ;; $cw_fetch
                 ;; top_of_stack = m[top_of_stack];
-                (call $set-top-of-stack (i32.load (call $top-of-stack)))
+                (call $set-top-of-stack (i32.load (i32.mul (call $top-of-stack) (i32.const 4))))
 
                 ;; break
                 (br $break))
