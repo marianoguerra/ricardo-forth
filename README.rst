@@ -1,13 +1,16 @@
 Ricardo Forth
 =============
 
-A Forth dialect implemented in C, Javascript, asm.js and WebAssembly.
+A Forth dialect implemented in C, Javascript, WebAssembly and compiled from C
+to asm.js and WebAssembly.
 
 This project is based on the 1992 `IOCCC <http://ioccc.org/>`_ entry `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>`_ (design notes: `buzzard.2.design <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.design>`_),
 prettified (see initial commits on this repo) and then compiled to:
 
 * `asmjs <http://asmjs.org/spec/latest/>`_ using `emscripten <http://kripken.github.io/emscripten-site/>`_
 * `WebAssembly <https://webassembly.github.io/>`_ using `Binaryen <https://github.com/WebAssembly/binaryen/>`_
+
+Also reimplemented by translating the C code into Javascript and WebAssebly.
 
 Setup Dev Environment
 ---------------------
@@ -85,6 +88,9 @@ src/buzzard.c
 src/buzzard.js
     Translation of buzzard.c by hand to vanilla js
 
+src/first.wast
+    Translation of buzzard.c by hand to WebAssembly text format
+
 src/clib.js
     JS implementations of c functions from buzzard.c too simulate i/o
 
@@ -127,6 +133,9 @@ This files are generated during *make all*.
 
 bin/first
     binary from buzzard.c
+
+bin/first.wasm
+    WebAssembly version of src/first.wast, compiled with wasm-as
 
 bin/buzzard-binaryen.*
     Files from c -> wasm translation
