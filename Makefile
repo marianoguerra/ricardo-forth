@@ -45,3 +45,6 @@ demos: demo1 demo2 demo3 demo4 demo5
 third:
 	cat ./examples/third ./docs/help.th - | ./bin/first
 
+index:
+	rst2html5 --embed-content --stylesheet-path resources/style.css resources/index.rst index.html
+

@@ -1,0 +1,12 @@
+body{
+ background-color: #fefefe;
+ color: #333;
+ margin: 3em 10%;
+ width: 80%;
+ font-family: helvetica;
+ font-size: 16pt;
+}
+
+p{
+ max-width: 100em;
+}
