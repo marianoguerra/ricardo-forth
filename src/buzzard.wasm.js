@@ -99,25 +99,25 @@
         }
 
         function lastStrEntry() {
-            return lib.loadI32(88);
+            return lib.loadI32(22003);
         }
 
         function lastDictEntry() {
-            return lib.loadI32(76);
+            return lib.loadI32(22000);
         }
 
         function dumpRegisters() {
             return {
                 "dictPtr": lib.loadI32(0),
-                "retStackIdx": lib.loadI32(4),
-                "ignore": lib.loadI32(8),
-                "_x": lib.loadI32(12),
-                "_y": lib.loadI32(16),
+                "retStackIdx": lib.loadI32(1),
+                "ignore": lib.loadI32(2),
+                "_x": lib.loadI32(3),
+                "_y": lib.loadI32(4),
                 "lastDictEntry": lastDictEntry(),
-                "programCounter": lib.loadI32(16),
-                "stackPtr": lib.loadI32(84),
+                "programCounter": lib.loadI32(22001),
+                "stackPtr": lib.loadI32(22002),
                 "lastStrEntry": lastStrEntry(),
-                "topOfStack": lib.loadI32(92)
+                "topOfStack": lib.loadI32(22004)
             };
         }
 
@@ -126,7 +126,7 @@
                 accum = [],
                 c;
 
-            for(var i = lastStrEntry() - 1; i > 20063; i -= 1) {
+            for(var i = lastStrEntry() - 1; i > 20563; i -= 1) {
                 c = lib.loadU8(i);
                 if (c === 0) {
                     if (accum.length > 0) {
@@ -162,15 +162,15 @@
         }
 
         function readEntry(addr) {
-            var nameAddr = lib.loadI32(addr + 4);
+            var nameAddr = lib.loadI32(addr + 1);
             return {
                 address: addr,
                 prev: lib.loadI32(addr),
                 nameAddr: nameAddr,
-                name: readCString(nameAddr),
-                codeword: lib.loadI32(addr + 8),
+                name: readCString(20500 + nameAddr),
+                codeword: lib.loadI32(addr + 2),
                 nextWords: [1, 2, 3, 4, 5].map(function (i) {
-                    return lib.loadI32(addr + 8 + (4 * i));
+                    return lib.loadI32(addr + 2 + i);
                 })
             };
         }
@@ -187,11 +187,12 @@
                 maxEntries += 1;
 
                 if (maxEntries > 1000) {
+                    console.error("too many entries", accum.reverse(), entry);
                     throw Error("too many entries");
                 }
 
                 entryAddr = entry.prev;
-            } while (entryAddr !== 8);
+            } while (entryAddr !== 1);
 
             accum.reverse();
             return accum;

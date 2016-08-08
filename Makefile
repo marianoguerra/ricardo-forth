@@ -6,7 +6,7 @@ first:
 	gcc src/buzzard.c -o bin/first
 
 first.wasm:
-	wasm-as src/buzzard.wast -o bin/first.wasm
+	wasm-as src/first.wast -o bin/first.wasm
 
 first-emcc:
 	emcc --pre-js src/buzzard-emcc.pre.js --separate-asm src/buzzard.c -o bin/buzzard-emcc.html
