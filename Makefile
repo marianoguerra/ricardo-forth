@@ -53,3 +53,7 @@ hello-emcc:
 
 hello-binaryen:
 	emcc -Os -s BINARYEN=1 -s "BINARYEN_METHOD='native-wasm'" -s "EXPORT_NAME='main'" resources/hello.c -o resources/hello-binaryen.html
+
+slides:
+
+	rst2html5 --embed-images --jquery --reveal-js --stylesheet-path resources/slides.css --reveal-js-opts theme=serif resources/slides.rst > resources/slides.html
