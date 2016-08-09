@@ -161,6 +161,7 @@ Resources
 
 * `Luke Wagner -on- WebAssembly: A New Compiler Target For The Web <https://www.youtube.com/watch?v=RByPdCN1RQ4>`_
 * `Ben Titzer @ VMSS16: A Little on V8 and WebAssembly <https://www.youtube.com/watch?v=BRNxM8szTPA&feature=youtu.be>`_
+* `Emscripten and WebAssembly by Alon Zakai / @kripken <https://kripken.github.io/talks/wasm.html#/>`_
 * `Build Your First Thing With WebAssembly <http://cultureofdevelopment.com/blog/build-your-first-thing-with-web-assembly/>`_
 * `A Particle System experiment designed to benchmark web technologies from a non trivial piece of code: ES6, Emscripten and Web Assembly <https://github.com/leefsmp/Particle-System>`_
 * `SHA-3 (Keccak padding) in WebAssembly WAST <https://github.com/axic/keccak-wasm>`_
