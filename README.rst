@@ -148,11 +148,14 @@ bin/buzzard-emcc.*
 Resources
 ---------
 
-* https://github.com/WebAssembly/binaryen/issues/663
-* https://docs.google.com/presentation/d/1dRsN5lKY60d3IOILi4bttJXOX4ge-2tA1PaEX-d5So0/edit?pref=2&pli=1#slide=id.g156cf85f39_1_274
-* https://github.com/qis/wasm
+* `Prototype Spec in Markdown <https://github.com/WebAssembly/spec/blob/md-proto/md-proto/WebAssembly.md>`_
+* `Wasm example and instructions to build on windows <https://github.com/qis/wasm>`_
+* emscripten's `emsdk/src/settings.js <https://github.com/kripken/emscripten/blob/master/src/settings.js>`_ contains docs about the flags that can be passed to emcc
 
-* in emscripten the file emsdk/src/settings.js
+* `Future of Binaryen in a stack machine world? <https://github.com/WebAssembly/binaryen/issues/663>`_
+
+  + `Slides where it was decided to switch from being an AST to being a stack machine <https://docs.google.com/presentation/d/1dRsN5lKY60d3IOILi4bttJXOX4ge-2tA1PaEX-d5So0/edit?pref=2&pli=1#slide=id.g156cf85f39_1_274>`_
+
 
 
 Copyright Notice
