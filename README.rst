@@ -158,6 +158,7 @@ Resources
 * `Future of Binaryen in a stack machine world? <https://github.com/WebAssembly/binaryen/issues/663>`_
 
   + `Slides where it was decided to switch from being an AST to being a stack machine <https://docs.google.com/presentation/d/1dRsN5lKY60d3IOILi4bttJXOX4ge-2tA1PaEX-d5So0/edit?pref=2&pli=1#slide=id.g156cf85f39_1_274>`_
+  + `Structured code for the stack machine <https://github.com/WebAssembly/design/issues/753>`_
 
 * `Luke Wagner -on- WebAssembly: A New Compiler Target For The Web <https://www.youtube.com/watch?v=RByPdCN1RQ4>`_
 * `Ben Titzer @ VMSS16: A Little on V8 and WebAssembly <https://www.youtube.com/watch?v=BRNxM8szTPA&feature=youtu.be>`_
