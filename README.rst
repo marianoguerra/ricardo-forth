@@ -156,6 +156,12 @@ Resources
 
   + `Slides where it was decided to switch from being an AST to being a stack machine <https://docs.google.com/presentation/d/1dRsN5lKY60d3IOILi4bttJXOX4ge-2tA1PaEX-d5So0/edit?pref=2&pli=1#slide=id.g156cf85f39_1_274>`_
 
+TODO
+----
+
+* Clean, extract, reuse code from bin/\*.html files
+* Create some micro benchmarks and benchmark tooling to compare execution time
+
 
 
 Copyright Notice
