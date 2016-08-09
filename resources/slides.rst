@@ -110,8 +110,10 @@ Wasm Text Format
 Wasm Text Format
 ----------------
 
-* Currently no final, official, text format
 * Prototypes use s-expression based syntax
+* Currently no final, official, text format
+
+  + `JS-like proposal <https://github.com/WebAssembly/design/pull/704>`_ from FF Nightly
 
 Wasm Status
 -----------
@@ -121,6 +123,8 @@ Getting to MVP
 * `Future of Binaryen in a stack machine world? <https://github.com/WebAssembly/binaryen/issues/663>`_
 
   + `Slides where it was decided to switch from being an AST to being a stack machine <https://docs.google.com/presentation/d/1dRsN5lKY60d3IOILi4bttJXOX4ge-2tA1PaEX-d5So0/edit?pref=2&pli=1#slide=id.g156cf85f39_1_274>`_
+  + `spec branch with stack changes <https://github.com/WebAssembly/spec/commits/stack>`_
+  + `Patch to chromium <https://codereview.chromium.org/2176653002/>`_
 
 * `Structured code for the stack machine <https://github.com/WebAssembly/design/issues/753>`_
 
@@ -530,6 +534,8 @@ Resources
 * `Prototype Spec in Markdown <https://github.com/WebAssembly/spec/blob/md-proto/md-proto/WebAssembly.md>`_
 * `WebAssembly Explorer <http://mbebenita.github.io/WasmExplorer/>`_
 * `ast.run WebAssembly playground <http://ast.run/>`_
+* `WASM Pilot Text Format Playground <http://people.mozilla.org/%7Eydelendik/tmp/waseditor/>`_
+* `gh/drom wasm/wast related projects <https://github.com/search?q=user%3Adrom+was>`_
 * emscripten's `emsdk/src/settings.js <https://github.com/kripken/emscripten/blob/master/src/settings.js>`_ contains docs about the flags that can be passed to emcc
 
 Videos
