@@ -143,6 +143,23 @@ Wasm Status
 * MVP (Version 1.0) expected to be shipped this summer
 * Standardization expected by the end of the year
 
+Wasm Status
+-----------
+
+======================== ========================= ==========================
+Browser                  Wasm Support              View Source
+======================== ========================= ==========================
+Firefox Stable (44)      No                        No
+Firefos Nightly          Yes                       Yes[1]
+Chrome Stable (52)       Yes                       No
+Chrome Canary            Yes                       No
+Edge
+======================== ========================= ==========================
+
+(as of August 10th, 2016)
+
+[1] Custom Format (js-like, not s-expression based)
+
 Wasm Roadmap
 ------------
 
