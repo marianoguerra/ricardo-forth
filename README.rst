@@ -145,6 +145,11 @@ bin/buzzard-binaryen.*
 bin/buzzard-emcc.*
     Files from c -> asmjs translation
 
+Presentation
+------------
+
+Slides from a presentation I gave at StuttgartJS (August 10th, 2016) are available here: `WebAssembly Presentation at StuttgartJS <https://marianoguerra.github.io/ricardo-forth/resources/slides.html>`_
+
 Resources
 ---------
 

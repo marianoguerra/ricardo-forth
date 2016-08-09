@@ -46,6 +46,11 @@ Read the Code
 
 To read the process of prettifying the C code follow the `buzzard.c commits <https://github.com/marianoguerra/ricardo-forth/commits/master/src/buzzard.c>`_ in chronological order.
 
+Presentation
+------------
+
+Slides from a presentation I gave at StuttgartJS (August 10th, 2016) are available here: `WebAssembly Presentation at StuttgartJS <resources/slides.html>`_
+
 WebAssembly Resources
 ---------------------
 
