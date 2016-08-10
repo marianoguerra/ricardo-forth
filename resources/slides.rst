@@ -33,7 +33,7 @@ Projects implemented completely in assembly
 LLVM
 ----
 
-* Collection of modular and reusable compiler and toolchain technologies 
+* Collection of modular and reusable compiler and toolchain technologies
 * Used to develop compiler front ends and back ends
 
 `llvm.org <http://llvm.org/>`_
@@ -50,7 +50,7 @@ LLVM Frontends
 LLVM Backends
 -------------
 
-    LLVM IR -> CPU specific binary\* 
+    LLVM IR -> CPU specific binary\*
 
 
 
@@ -68,7 +68,7 @@ WebAssembly
 -----------
 
 * Portable
-* Size- and load-time-efficient format 
+* Size- and load-time-efficient format
 * Suitable for compilation to the web
 
 Examples
@@ -78,42 +78,14 @@ Examples
 * `BananaBread <https://kripken.github.io/BananaBread/wasm-demo/index.html>`_
 * `Oryol 3D Engine Demos in asm.js and wasm <http://floooh.github.io/oryol-samples/>`_
 
-Wasm Binary Format
-------------------
+What Wasm isn't
+---------------
 
-* Can be natively decoded much faster than JavaScript can be parsed
+* It's not a replacement for js
+* It's not a programming language
+* It's not a separate VM
 
-  + Experiments show more than 20X faster
-
-Wasm Binary Format
-------------------
-
-* Must be
-
-  + Portable
-  + Stable
-  + Small
-  + Fast to decode
-  + Fast to compile
-
-Wasm Text Format
-----------------
-
-* For "view source"
-* For tools, experiments, debugging, optimization
-* Equivalent and isomorphic to the binary format
-* Standardized only for tooling purposes
-* Nested statements 
-
-  + Instead of linear list like in asm
-
-Wasm Text Format
-----------------
-
-* Prototypes use s-expression based syntax
-* Currently no final, official, text format
-
-  + `JS-like proposal <https://github.com/WebAssembly/design/pull/704>`_ from FF Nightly
+* It's a complement to JS
 
 Wasm Status
 -----------
@@ -140,7 +112,7 @@ Wasm Status
 
 * 3 Browser engines have native support in various stages
 
-  + Google Chrome Beta: fully spec compliant on all architectures, behind a flag
+  + Google Chrome: fully spec compliant on all architectures, behind a flag
   + Mozilla Firefox: optimized for ia32 and x64, behind a flag
   + Microsoft Edge: support in an experimental build
 
@@ -154,10 +126,10 @@ Wasm Status
 Browser                  Wasm Support              View Source
 ======================== ========================= ==========================
 Firefox Stable (44)      No                        No
-Firefos Nightly          Yes                       Yes[1]
+Firefox Nightly          Yes                       Yes[1]
 Chrome Stable (52)       Yes                       No
 Chrome Canary            Yes                       No
-Edge
+Edge                     No                        No
 ======================== ========================= ==========================
 
 (as of August 10th, 2016)
@@ -178,6 +150,51 @@ Wasm MVP
 * Which perform well even on mobile devices
 * Leads to roughly the same functionality as asm.js
 
+Wasm Post-MVP
+-------------
+
+* Threads
+* SIMD
+* Zero-cost Exception Handling
+* Feature Testing
+
+Wasm Future
+-----------
+
+* Finer-grained control over memory
+* Large page support
+* More expressive control flow
+
+  + goto, tail calls
+
+Wasm Future
+-----------
+
+* GC
+* Source maps integration
+* Coroutines
+* Platform-independent JIT compilation
+
+Wasm Future
+-----------
+
+* Multiprocess support
+* Additional float operators
+* Additional integer operators
+
+  + min
+  + max
+  + abs
+
+Wasm Future
+-----------
+
+* Integer Overflow Detection
+* Better feature testing support
+* Mutable global variables
+* Streaming Compilation
+* Multiple Tables and Memories
+
 Wasm MVP
 --------
 
@@ -189,6 +206,43 @@ Wasm MVP
 
   + Web browsers
   + Completely different execution environments
+
+Wasm Binary Format
+------------------
+
+* Can be natively decoded much faster than JavaScript can be parsed
+
+  + Experiments show more than 20X faster
+
+Wasm Binary Format
+------------------
+
+* Must be
+
+  + Portable
+  + Stable
+  + Small
+  + Fast to decode
+  + Fast to compile
+
+Wasm Text Format
+----------------
+
+* For "view source"
+* For tools, experiments, debugging, optimization
+* Equivalent and isomorphic to the binary format
+* Standardized only for tooling purposes
+* Nested statements
+
+  + Instead of linear list like in asm
+
+Wasm Text Format
+----------------
+
+* Prototypes use s-expression based syntax
+* Currently no final, official, text format
+
+  + `JS-like proposal <https://github.com/WebAssembly/design/pull/704>`_ from FF Nightly
 
 Wasm in a Nutshell
 ------------------
@@ -328,60 +382,6 @@ Index Spaces
 * Linear Memory Index Space
 * Table Index Space
 
-Wasm Post-MVP
--------------
-
-* Threads
-* SIMD
-* Zero-cost Exception Handling
-* Feature Testing
-
-Wasm Future
------------
-
-* Finer-grained control over memory
-* Large page support
-* More expressive control flow
-
-  + goto, tail calls
-
-Wasm Future
------------
-
-* GC
-* Source maps integration
-* Coroutines
-* Platform-independent JIT compilation
-
-Wasm Future
------------
-
-* Multiprocess support
-* Additional float operators
-* Additional integer operators
-
-  + min
-  + max
-  + abs
-
-Wasm Future
------------
-
-* Integer Overflow Detection
-* Better feature testing support
-* Mutable global variables
-* Streaming Compilation
-* Multiple Tables and Memories
-
-What Wasm isn't
----------------
-
-* It's not a replacement for js
-* It's not a programming language
-* It's not a separate VM
-
-* It's a complement to JS
-
 Tools
 -----
 
@@ -437,7 +437,7 @@ Setting up the environment
 
 * Attempt 3: compile from source
 
-  + FAIL: no support for binaryen yet (WAT?)
+  + FAIL: no support for binaryen yet (WAT)
 
 * Attempt 4: compile from source (incoming branch of emscripten)
 
@@ -451,7 +451,8 @@ What can I do with this?
 ------------------------
 
 * I like minimal simple things
-* I convert any problem into a "I need to build/implement" a programming language problem
+* I used to code in assembly
+* I convert any problem into a "let's implement a programming language" problem
 
 Idea
 ----
@@ -497,10 +498,10 @@ Result
 `Ricardo Forth <https://marianoguerra.github.io/ricardo-forth/>`_
 
 * A Forth dialect base on `buzzard.2 <http://ftp.funet.fi/pub/doc/IOCCC/1992/buzzard.2.orig.c>`_
-* Implemented in C, Javascript and WebAssembly 
+* Implemented in C, Javascript and WebAssembly
 * Compiled from C to
 
-  + asm.js (using emscripten) 
+  + asm.js (using emscripten)
 
     - `run <https://github.com/marianoguerra/ricardo-forth/blob/master/bin/buzzard-binaryen.asm.js#L4922>`_, `def_word <https://github.com/marianoguerra/ricardo-forth/blob/master/bin/buzzard-binaryen.asm.js#L5285>`_, `r <https://github.com/marianoguerra/ricardo-forth/blob/master/bin/buzzard-binaryen.asm.js#L4231>`_, `inlines append_to_dict <https://github.com/marianoguerra/ricardo-forth/blob/master/bin/buzzard-binaryen.asm.js#L4944>`_
 
@@ -515,9 +516,9 @@ Result
 Version                SLOC   Boilerplate Total SLOC
 ====================== ====== =========== ================
 C                      229    0           229
-JS   (me)              241    0           241
-Wasm (me)              425    0           425
-Wasm[1] (Binaryen)     25626  5162        30788
+JS       (me)          241    0           241
+Wasm     (me)          425    0           425
+Wasm[1]  (Binaryen)    25626  5162        30788
 asmjs[2] (Emscripten)  10322  4740        15062
 ====================== ====== =========== ================
 
